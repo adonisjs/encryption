@@ -2,6 +2,13 @@
   "name": "@adonisjs/encryption",
   "version": "0.0.0",
   "description": "Encryption provider for AdonisJs",
+  "files": [
+    "build/adonis-typings",
+    "build/providers",
+    "build/src",
+    "build/standalone.d.ts",
+    "build/standalone.js"
+  ],
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
@@ -27,6 +34,7 @@
   },
   "homepage": "https://github.com/adonisjs/encryption#readme",
   "devDependencies": {
+    "@adonisjs/fold": "^6.1.6",
     "@adonisjs/mrm-preset": "^2.1.0",
     "@types/node": "^12.7.4",
     "commitizen": "^4.0.3",
@@ -50,12 +58,6 @@
       ".ts"
     ]
   },
-  "main": "build/index.js",
-  "files": [
-    "build/src",
-    "build/index.d.ts",
-    "build/index.js"
-  ],
   "husky": {
     "hooks": {
       "pre-commit": "doctoc README.md --title='## Table of contents' && git add README.md",
@@ -66,5 +68,8 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "simple-encryptor": "^3.0.0"
   }
 }
