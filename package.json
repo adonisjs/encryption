@@ -13,12 +13,13 @@
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
     "test": "node japaFile.js",
-    "prepublishOnly": "npm run build",
     "lint": "tslint --project tsconfig.json",
     "clean": "del build",
     "compile": "npm run lint && npm run clean && tsc",
-    "build": "npm run compile",
-    "commit": "git-cz"
+    "build": "npm run compile && typedoc --theme markdown --excludePrivate --hideSources && git add docs",
+    "commit": "git-cz",
+    "release": "np",
+    "version": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -44,10 +45,13 @@
     "husky": "^3.0.5",
     "japa": "^3.0.1",
     "mrm": "^1.2.2",
-    "pkg-ok": "^2.3.1",
+    "np": "^5.0.3",
     "ts-node": "^8.3.0",
     "tslint": "^5.19.0",
     "tslint-eslint-rules": "^5.4.0",
+    "typedoc": "^0.15.0",
+    "typedoc-plugin-external-module-name": "^2.1.0",
+    "typedoc-plugin-markdown": "^2.1.10",
     "typescript": "^3.6.2"
   },
   "nyc": {
@@ -71,5 +75,9 @@
   },
   "dependencies": {
     "simple-encryptor": "^3.0.0"
+  },
+  "np": {
+    "contents": ".",
+    "anyBranch": false
   }
 }
