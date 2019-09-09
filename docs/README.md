@@ -2,6 +2,8 @@
 
 [Globals](globals.md)
 
+# @adonisjs/encryption
+
 <div align="center">
    <img src="https://res.cloudinary.com/adonisjs/image/upload/q_100/v1564392111/adonis-banner_o9lunk.png" width="600px">
 </div>

@@ -1,6 +1,6 @@
 **[@adonisjs/encryption](../README.md)**
 
-[Globals](../globals.md) › ["src/Encryption/index"](../modules/_src_encryption_index_.md) › [Encryption](_src_encryption_index_.encryption.md)
+[Globals](../globals.md) › [&quot;src/Encryption/index&quot;](../modules/_src_encryption_index_.md) › [Encryption](_src_encryption_index_.encryption.md)
 
 # Class: Encryption
 
@@ -57,7 +57,7 @@ Base64 decode a previously encoded string or Buffer.
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`encoded` | string \| Buffer | - |
+`encoded` | string &#124; Buffer | - |
 `encoding` | BufferEncoding | "utf-8" |
 
 **Returns:** *string*
@@ -74,7 +74,7 @@ Base64 encode Buffer or string
 
 Name | Type |
 ------ | ------ |
-`arrayBuffer` | ArrayBuffer \| SharedArrayBuffer |
+`arrayBuffer` | ArrayBuffer &#124; SharedArrayBuffer |
 
 **Returns:** *string*
 
