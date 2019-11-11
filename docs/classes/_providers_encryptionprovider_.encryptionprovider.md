@@ -1,6 +1,4 @@
-**[@adonisjs/encryption](../README.md)**
-
-[Globals](../globals.md) › [&quot;providers/EncryptionProvider&quot;](../modules/_providers_encryptionprovider_.md) › [EncryptionProvider](_providers_encryptionprovider_.encryptionprovider.md)
+[@adonisjs/encryption](../README.md) › [Globals](../globals.md) › ["providers/EncryptionProvider"](../modules/_providers_encryptionprovider_.md) › [EncryptionProvider](_providers_encryptionprovider_.encryptionprovider.md)
 
 # Class: EncryptionProvider
 

@@ -1,6 +1,4 @@
-**[@adonisjs/encryption](README.md)**
-
-[Globals](globals.md)
+[@adonisjs/encryption](README.md) › [Globals](globals.md)
 
 # @adonisjs/encryption
 

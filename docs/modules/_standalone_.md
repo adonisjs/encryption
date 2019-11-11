@@ -1,6 +1,5 @@
-**[@adonisjs/encryption](../README.md)**
-
-[Globals](../globals.md) › [&quot;standalone&quot;](_standalone_.md)
+[@adonisjs/encryption](../README.md) › [Globals](../globals.md) › ["standalone"](_standalone_.md)
 
 # External module: "standalone"
+
 

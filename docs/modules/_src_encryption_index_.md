@@ -1,6 +1,4 @@
-**[@adonisjs/encryption](../README.md)**
-
-[Globals](../globals.md) › [&quot;src/Encryption/index&quot;](_src_encryption_index_.md)
+[@adonisjs/encryption](../README.md) › [Globals](../globals.md) › ["src/Encryption/index"](_src_encryption_index_.md)
 
 # External module: "src/Encryption/index"
 
