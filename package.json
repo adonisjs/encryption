@@ -2,6 +2,7 @@
   "name": "@adonisjs/encryption",
   "version": "1.0.2",
   "description": "Encryption provider for AdonisJs",
+  "main": "build/providers/EncryptionProvider.js",
   "files": [
     "build/adonis-typings",
     "build/providers",
