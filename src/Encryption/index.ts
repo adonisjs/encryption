@@ -24,14 +24,14 @@ export class Encryption implements EncryptionContract {
    * Simple encryptor .d.ts files are broken and hence we need
    * to cast it to any at the time of usage
    */
-  private _encryptor: any
+  private encryptor: any
 
-  constructor (private _secret: string, private _options?: Partial<EncryptionConfigContract>) {
-    this._encryptor = (SimpleEncryptor as any)(Object.assign({
-      key: this._secret,
+  constructor (private secret: string, private options?: Partial<EncryptionConfigContract>) {
+    this.encryptor = (SimpleEncryptor as any)(Object.assign({
+      key: this.secret,
       debug: false,
       hmac: false,
-    }, this._options))
+    }, this.options))
   }
 
   /**
@@ -40,7 +40,7 @@ export class Encryption implements EncryptionContract {
    * encryption class with `hmac=true`.
    */
   public encrypt (payload: any): string {
-    return this._encryptor.encrypt(payload)
+    return this.encryptor.encrypt(payload)
   }
 
   /**
@@ -48,7 +48,7 @@ export class Encryption implements EncryptionContract {
    * decrypt.
    */
   public decrypt (payload: string): any {
-    return this._encryptor.decrypt(payload)
+    return this.encryptor.decrypt(payload)
   }
 
   /**
@@ -56,7 +56,7 @@ export class Encryption implements EncryptionContract {
    * configuration
    */
   public child (options?: Partial<EncryptionConfigContract>): Encryption {
-    return new Encryption(this._secret, options)
+    return new Encryption(this.secret, options)
   }
 
   /**
