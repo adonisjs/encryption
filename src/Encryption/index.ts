@@ -55,7 +55,7 @@ export class Encryption implements EncryptionContract {
    * Returns a custom instance of [[Encryption]] class with custom
    * configuration
    */
-  public child (options?: Partial<EncryptionConfigContract>): Encryption {
+  public create (options?: Partial<EncryptionConfigContract>): Encryption {
     return new Encryption(this.secret, options)
   }
 

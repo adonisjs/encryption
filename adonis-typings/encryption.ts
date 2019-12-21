@@ -25,7 +25,7 @@ declare module '@ioc:Adonis/Core/Encryption' {
   export interface EncryptionContract {
     encrypt (payload: any): string,
     decrypt (payload: string): any,
-    child (options?: Partial<EncryptionConfigContract>): EncryptionContract,
+    create (options?: Partial<EncryptionConfigContract>): EncryptionContract,
     base64Encode (arrayBuffer: ArrayBuffer | SharedArrayBuffer): string,
     base64Encode (data: string, encoding?: BufferEncoding): string,
     base64Decode (encoded: string | Buffer, encoding?: BufferEncoding): string,

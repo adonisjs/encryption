@@ -25,13 +25,13 @@ test.group('Encryption', () => {
 
   test('get new instance of encryptor with different key', (assert) => {
     const encryption = new Encryption('real secret keys should be long and random')
-    const customEncryptor = encryption.child({ key: 'another secret key' })
+    const customEncryptor = encryption.create({ key: 'another secret key' })
     assert.isNull(encryption.decrypt(customEncryptor.encrypt('hello-world')))
   })
 
   test('get new instance of encryptor with hmac enabled', (assert) => {
     const encryption = new Encryption('real secret keys should be long and random')
-    const customEncryptor = encryption.child({ hmac: true })
+    const customEncryptor = encryption.create({ hmac: true })
     assert.isNull(encryption.decrypt(customEncryptor.encrypt('hello-world')))
   })
 
