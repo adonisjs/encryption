@@ -24,7 +24,7 @@ generated with `sha256` encryption.
 
 * [base64Decode](_src_encryption_index_.encryption.md#base64decode)
 * [base64Encode](_src_encryption_index_.encryption.md#base64encode)
-* [child](_src_encryption_index_.encryption.md#child)
+* [create](_src_encryption_index_.encryption.md#create)
 * [decrypt](_src_encryption_index_.encryption.md#decrypt)
 * [encrypt](_src_encryption_index_.encryption.md#encrypt)
 
@@ -32,14 +32,14 @@ generated with `sha256` encryption.
 
 ###  constructor
 
-\+ **new Encryption**(`_secret`: string, `_options?`: Partial‹EncryptionConfigContract›): *[Encryption](_src_encryption_index_.encryption.md)*
+\+ **new Encryption**(`secret`: string, `options?`: Partial‹EncryptionConfigContract›): *[Encryption](_src_encryption_index_.encryption.md)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`_secret` | string |
-`_options?` | Partial‹EncryptionConfigContract› |
+`secret` | string |
+`options?` | Partial‹EncryptionConfigContract› |
 
 **Returns:** *[Encryption](_src_encryption_index_.encryption.md)*
 
@@ -89,9 +89,9 @@ Name | Type |
 
 ___
 
-###  child
+###  create
 
-▸ **child**(`options?`: Partial‹EncryptionConfigContract›): *[Encryption](_src_encryption_index_.encryption.md)*
+▸ **create**(`options?`: Partial‹EncryptionConfigContract›): *[Encryption](_src_encryption_index_.encryption.md)*
 
 Returns a custom instance of [Encryption](_src_encryption_index_.encryption.md) class with custom
 configuration
