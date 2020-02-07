@@ -17,7 +17,7 @@
     "lint": "eslint . --ext=.ts",
     "clean": "del build",
     "compile": "npm run lint && npm run clean && tsc",
-    "build": "npm run compile && typedoc --theme markdown --excludePrivate --hideSources && git add docs",
+    "build": "npm run compile",
     "commit": "git-cz",
     "release": "np",
     "version": "npm run build"
@@ -50,9 +50,6 @@
     "mrm": "^2.0.4",
     "np": "^5.2.1",
     "ts-node": "^8.6.2",
-    "typedoc": "^0.16.9",
-    "typedoc-plugin-external-module-name": "^3.0.0",
-    "typedoc-plugin-markdown": "^2.2.16",
     "typescript": "^3.7.5"
   },
   "nyc": {
