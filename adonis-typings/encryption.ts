@@ -12,13 +12,66 @@
  * file.
  */
 declare module '@ioc:Adonis/Core/Encryption' {
-  export type EncryptionConfigContract = {
-    key: string,
-    hmac: boolean,
-    reviver: (key: string, value: string) => any,
+  import { base64 } from '@poppinss/utils'
+
+  /**
+   * Config accepted by the encryption
+   */
+  export type EncryptionOptions = {
+    algorithm?: 'aes-256-cbc',
+    secret: string,
   }
 
+  /**
+   * Message verifier is similar to the encryption. However, the actual payload
+   * is not encrypted and just base64 encoded. This is helpful when you are
+   * not concerned about the confidentiality of the data, but just want to
+   * make sure that is not tampered after encoding.
+   */
+  export interface MessageVerifierContract {
+    /**
+     * Sign a given piece of value using the app secret. A wide range of
+     * data types are supported.
+     *
+     * - String
+     * - Arrays
+     * - Objects
+     * - Booleans
+     * - Numbers
+     * - Dates
+     *
+     * You can optionally define a purpose for which the value was signed and
+     * mentioning a different purpose/no purpose during unsign will fail.
+     */
+    sign (payload: any, expiresIn?: string | number, purpose?: string): string
+
+    /**
+     * Unsign, previously signed value
+     */
+    unsign<T extends any> (payload: string, purpose?: string): T | null
+  }
+
+  /**
+   * The encryption class allows encrypting and decrypting values using `aes-256-cbc` or `aes-128-cbc`
+   * algorithms. The encrypted value uses a unique iv for every encryption and this ensures semantic
+   * security (read more https://en.wikipedia.org/wiki/Semantic_security).
+   */
   export interface EncryptionContract {
+    /**
+     * Reference to the message verifier
+     */
+    verifier: MessageVerifierContract,
+
+    /**
+     * Reference to base64 object for base64 encoding/decoding values
+     */
+    base64: typeof base64,
+
+    /**
+     * Current algorithm in use
+     */
+    algorithm: EncryptionOptions['algorithm'],
+
     /**
      * Encrypt a given piece of value using the app secret. A wide range of
      * data types are supported.
@@ -30,30 +83,20 @@ declare module '@ioc:Adonis/Core/Encryption' {
      * - Numbers
      * - Dates
      *
-     * Encrypt/decrypting a date object will result in returning a date string.
+     * You can optionally define a purpose for which the value was encrypted and
+     * mentioning a different purpose/no purpose during decrypt will fail.
      */
-    encrypt (payload: any): string,
+    encrypt (payload: any, expiresIn?: string | number, purpose?: string): string,
 
     /**
      * Decrypt a previously encrypted value
      */
-    decrypt (payload: string): any,
+    decrypt<T extends any> (payload: string, purpose?: string): T,
 
     /**
-     * Create a new instance of encryption with custom runtime config
+     * Create a children instance with different secret key
      */
-    create (options?: Partial<EncryptionConfigContract>): EncryptionContract,
-
-    /**
-     * BASE64 Encode value
-     */
-    base64Encode (arrayBuffer: ArrayBuffer | SharedArrayBuffer): string,
-    base64Encode (data: string, encoding?: BufferEncoding): string,
-
-    /**
-     * BASE64 decode the encoded value
-     */
-    base64Decode (encoded: string | Buffer, encoding?: BufferEncoding): string,
+    child (options?: EncryptionOptions): EncryptionContract,
   }
 
   const Encryption: EncryptionContract

@@ -1,81 +1,182 @@
 /*
- * @adonisjs/encryption
- *
- * (c) Harminder Virk <virk@adonisjs.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+* @adonisjs/encryption
+*
+* (c) Harminder Virk <virk@adonisjs.com>
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
 */
 
-import SimpleEncryptor from 'simple-encryptor'
-import { EncryptionContract, EncryptionConfigContract } from '@ioc:Adonis/Core/Encryption'
+/// <reference path="../../adonis-typings/encryption.ts" />
+
+import { createHash, createCipheriv, createDecipheriv } from 'crypto'
+import { base64 as utilsBase64, randomString, Exception } from '@poppinss/utils'
+import { EncryptionContract, EncryptionOptions } from '@ioc:Adonis/Core/Encryption'
+
+import { Hmac } from '../Hmac'
+import { MessageBuilder } from '../MessageBuilder'
+import { MessageVerifier } from '../MessageVerifier'
 
 /**
- * Encryption class uses `AES-256` to encrypt raw values using `Objects`,
- * `Arrays` and even `Date` objects. When `hmac=true`, an HMAC is
- * generated with `sha256` encryption.
+ * The encryption class allows encrypting and decrypting values using `aes-256-cbc` or `aes-128-cbc`
+ * algorithms. The encrypted value uses a unique iv for every encryption and this ensures semantic
+ * security (read more https://en.wikipedia.org/wiki/Semantic_security).
  */
 export class Encryption implements EncryptionContract {
   /**
-   * Simple encryptor .d.ts files are broken and hence we need
-   * to cast it to any at the time of usage
+   * The key for signing and encrypting values. It is derived
+   * from the user provided secret.
    */
-  private encryptor: any
+  private cryptoKey = createHash('sha256').update(this.options.secret).digest()
 
-  constructor (private secret: string, private options?: Partial<EncryptionConfigContract>) {
-    this.encryptor = (SimpleEncryptor as any)(Object.assign({
-      key: this.secret,
-      debug: false,
-      hmac: false,
-    }, this.options))
+  /**
+   * Use `dot` as a separator for joining encrypted value, iv and the
+   * hmac hash. The idea is borrowed from JWT's in which each part
+   * of the payload is concatenated with a dot.
+   */
+  private separator = '.'
+
+  /**
+   * Reference to the instance of message verifier for signing
+   * and verifying values.
+   */
+  public verifier = new MessageVerifier(this.options.secret)
+
+  /**
+   * Reference to base64 object for base64 encoding/decoding values
+   */
+  public base64: typeof utilsBase64 = utilsBase64
+
+  /**
+   * The algorithm in use
+   */
+  public algorithm = this.options.algorithm || 'aes-256-cbc'
+
+  constructor (private options: EncryptionOptions) {
+    this.validateSecret()
   }
 
   /**
-   * Encrypts value with `AES-256` encryption. HMAC is disabled by default for
-   * returning shorter output. Feel free to grab a [[newInstance]] of the
-   * encryption class with `hmac=true`.
+   * Validates the app secret
    */
-  public encrypt (payload: any): string {
-    return this.encryptor.encrypt(payload)
-  }
-
-  /**
-   * Decrypt existing encrypted value. Returns `null`, when unable to
-   * decrypt.
-   */
-  public decrypt (payload: string): any {
-    return this.encryptor.decrypt(payload)
-  }
-
-  /**
-   * Returns a custom instance of [[Encryption]] class with custom
-   * configuration
-   */
-  public create (options?: Partial<EncryptionConfigContract>): Encryption {
-    return new Encryption(this.secret, options)
-  }
-
-  /**
-   * Base64 encode Buffer or string
-   */
-  public base64Encode (arrayBuffer: ArrayBuffer | SharedArrayBuffer): string
-  public base64Encode (data: string, encoding?: BufferEncoding): string
-  public base64Encode (
-    data: ArrayBuffer | SharedArrayBuffer | string,
-    encoding?: BufferEncoding,
-  ): string {
-    if (typeof (data) === 'string') {
-      return Buffer.from(data, encoding).toString('base64')
+  private validateSecret () {
+    if (typeof (this.options.secret) !== 'string') {
+      throw new Exception(
+        'Missing "app.appKey". Makes sure to define it inside the config file',
+        500,
+        'E_MISSING_APP_KEY',
+      )
     }
-    return Buffer.from(data).toString('base64')
+
+    if (this.options.secret.length < 16) {
+      throw new Exception(
+        '"app.appKey" must have minimum length of 16 characters',
+        500,
+        'E_INVALID_APP_KEY',
+      )
+    }
   }
 
   /**
-   * Base64 decode a previously encoded string or Buffer.
+   * Encrypt value with optional expiration and purpose
    */
-  public base64Decode (encoded: string | Buffer, encoding: BufferEncoding = 'utf-8'): string {
-    return Buffer.isBuffer(encoded)
-      ? encoded.toString(encoding)
-      : Buffer.from(encoded, 'base64').toString(encoding)
+  public encrypt (value: any, expiresAt?: string | number, purpose?: string) {
+    /**
+     * Using a random string as the iv for generating unpredictable values
+     */
+    const iv = randomString(16)
+
+    /**
+     * Creating chiper
+     */
+    const cipher = createCipheriv(this.algorithm, this.cryptoKey, iv)
+
+    /**
+     * Encoding value to a string so that we can set it on the cipher
+     */
+    const encodedValue = new MessageBuilder().build(value, expiresAt, purpose)
+
+    /**
+     * Set final to the cipher instance and encrypt it
+     */
+    const encrypted = Buffer.concat([cipher.update(encodedValue, 'utf8'), cipher.final()])
+
+    /**
+     * Concatenate `encrypted value` and `iv` by urlEncoding them. The concatenation is required
+     * to generate the HMAC, so that HMAC checks for integrity of both the `encrypted value`
+     * and the `iv`.
+     */
+    const result = `${this.base64.urlEncode(encrypted)}${this.separator}${this.base64.urlEncode(iv)}`
+
+    /**
+     * Returns the result + hmac
+     */
+    return `${result}${this.separator}${new Hmac(this.cryptoKey).generate(result)}`
+  }
+
+  /**
+   * Decrypt value and verify it against a purpose
+   */
+  public decrypt (value: string, purpose?: string) {
+    if (typeof (value) !== 'string') {
+      throw new Exception('"Encryption.decrypt" expects a string value', 500, 'E_RUNTIME_EXCEPTION')
+    }
+
+    /**
+     * Make sure the encrypted value is in correct format. ie
+     * [encrypted value]--[iv]--[hash]
+     */
+    const [encryptedEncoded, ivEncoded, hash] = value.split(this.separator)
+    if (!encryptedEncoded || !ivEncoded || !hash) {
+      return null
+    }
+
+    /**
+     * Make sure we are able to urlDecode the encrypted value
+     */
+    const encrypted = this.base64.urlDecode(encryptedEncoded, 'binary')
+    if (!encrypted) {
+      return null
+    }
+
+    /**
+     * Make sure we are able to urlDecode the iv
+     */
+    const iv = this.base64.urlDecode(ivEncoded)
+    if (!iv) {
+      return null
+    }
+
+    /**
+     * Make sure the hash is correct, it means the first 2 parts of the
+     * string are not tampered.
+     */
+    const isValidHmac = new Hmac(this.cryptoKey).compare(
+      `${encryptedEncoded}${this.separator}${ivEncoded}`,
+      hash,
+    )
+
+    if (!isValidHmac) {
+      return null
+    }
+
+    /**
+     * The Decipher can raise exceptions with malformed input, so we wrap it
+     * to avoid leaking sensitive information
+     */
+    try {
+      const decipher = createDecipheriv(this.algorithm, this.cryptoKey, iv)
+      const decrypted = decipher.update(encrypted, 'binary', 'utf8') + decipher.final('utf8')
+      return new MessageBuilder().verify(decrypted, purpose)
+    } catch (error) {
+      return null
+    }
+  }
+
+  /**
+   * Returns a new instance of encryption with custom secret key
+   */
+  public child (options: EncryptionOptions) {
+    return new Encryption(options)
   }
 }
