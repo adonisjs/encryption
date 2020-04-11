@@ -1,7 +1,3 @@
-/**
- * @module @adonisjs/encryption
- */
-
 /*
  * @adonisjs/encryption
  *
