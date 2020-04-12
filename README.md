@@ -33,7 +33,7 @@ and then use it as follows:
 
 ```ts
 import { Encryption } from '@adonisjs/encryption/build/standalone'
-const encryption = new Encryption('verylongandrandom32characterskey', {})
+const encryption = new Encryption({ secret: 'verylongandrandom32characterskey' })
 
 const encryptedValue = encryption.encrypt('hello-world')
 encryption.decrypt(encryptedValue) // 'hello-world'
