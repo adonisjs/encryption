@@ -10,11 +10,10 @@
 /// <reference path="../../adonis-typings/encryption.ts" />
 
 import { createHash, createCipheriv, createDecipheriv } from 'crypto'
-import { base64 as utilsBase64, randomString, Exception } from '@poppinss/utils'
 import { EncryptionContract, EncryptionOptions } from '@ioc:Adonis/Core/Encryption'
+import { base64 as utilsBase64, randomString, Exception, MessageBuilder } from '@poppinss/utils'
 
 import { Hmac } from '../Hmac'
-import { MessageBuilder } from '../MessageBuilder'
 import { MessageVerifier } from '../MessageVerifier'
 
 /**

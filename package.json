@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "@hapi/bourne": "^2.0.0",
-    "@poppinss/utils": "^2.2.0",
+    "@poppinss/utils": "^2.2.3",
     "ms": "^2.1.2"
   },
   "np": {

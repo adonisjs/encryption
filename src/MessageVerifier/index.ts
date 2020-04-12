@@ -10,11 +10,10 @@
 /// <reference path="../../adonis-typings/encryption.ts" />
 
 import { createHash } from 'crypto'
-import { base64, Exception } from '@poppinss/utils'
+import { base64, Exception, MessageBuilder } from '@poppinss/utils'
 import { MessageVerifierContract } from '@ioc:Adonis/Core/Encryption'
 
 import { Hmac } from '../Hmac'
-import { MessageBuilder } from '../MessageBuilder'
 
 /**
  * Message verifier is similar to the encryption. However, the actual payload
