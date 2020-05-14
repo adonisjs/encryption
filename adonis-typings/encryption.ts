@@ -91,7 +91,7 @@ declare module '@ioc:Adonis/Core/Encryption' {
     /**
      * Decrypt a previously encrypted value
      */
-    decrypt<T extends any> (payload: string, purpose?: string): T,
+    decrypt<T extends any> (payload: string, purpose?: string): T | null,
 
     /**
      * Create a children instance with different secret key

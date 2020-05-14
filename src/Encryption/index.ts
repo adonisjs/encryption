@@ -116,7 +116,7 @@ export class Encryption implements EncryptionContract {
   /**
    * Decrypt value and verify it against a purpose
    */
-  public decrypt (value: string, purpose?: string) {
+  public decrypt<T extends any> (value: string, purpose?: string): T | null {
     if (typeof (value) !== 'string') {
       throw new Exception('"Encryption.decrypt" expects a string value', 500, 'E_RUNTIME_EXCEPTION')
     }
