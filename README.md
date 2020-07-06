@@ -15,6 +15,7 @@ This module is used by [AdonisJs](https://adonisjs.com) to encrypt/decrypt value
 
 - [Usage](#usage)
 - [Using with AdonisJs](#using-with-adonisjs)
+- [Audit report](#audit-report)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -62,6 +63,9 @@ And use it as follows:
 import Encryption from '@ioc:Adonis/Core/Encryption'
 Encryption.encrypt('password')
 ```
+
+## Audit report
+[Click here](https://htmlpreview.github.io/?https://github.com/adonisjs/encryption/blob/develop/npm-audit.html) to see the latest npm audit report.
 
 [circleci-image]: https://img.shields.io/circleci/project/github/adonisjs/encryption/master.svg?style=for-the-badge&logo=circleci
 [circleci-url]: https://circleci.com/gh/adonisjs/encryption "circleci"
