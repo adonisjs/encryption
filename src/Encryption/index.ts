@@ -68,7 +68,11 @@ export class Encryption implements EncryptionContract {
 		}
 
 		if (this.options.secret.length < 16) {
-			throw new Exception('"app.appKey" must have minimum length of 16 characters', 500, 'E_INVALID_APP_KEY')
+			throw new Exception(
+				'"app.appKey" must have minimum length of 16 characters',
+				500,
+				'E_INVALID_APP_KEY'
+			)
 		}
 	}
 
@@ -101,7 +105,9 @@ export class Encryption implements EncryptionContract {
 		 * to generate the HMAC, so that HMAC checks for integrity of both the `encrypted value`
 		 * and the `iv`.
 		 */
-		const result = `${this.base64.urlEncode(encrypted)}${this.separator}${this.base64.urlEncode(iv)}`
+		const result = `${this.base64.urlEncode(encrypted)}${this.separator}${this.base64.urlEncode(
+			iv
+		)}`
 
 		/**
 		 * Returns the result + hmac
@@ -146,7 +152,10 @@ export class Encryption implements EncryptionContract {
 		 * Make sure the hash is correct, it means the first 2 parts of the
 		 * string are not tampered.
 		 */
-		const isValidHmac = new Hmac(this.cryptoKey).compare(`${encryptedEncoded}${this.separator}${ivEncoded}`, hash)
+		const isValidHmac = new Hmac(this.cryptoKey).compare(
+			`${encryptedEncoded}${this.separator}${ivEncoded}`,
+			hash
+		)
 
 		if (!isValidHmac) {
 			return null

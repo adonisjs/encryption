@@ -23,7 +23,10 @@ test.group('Message Verifier', () => {
 	test('sign an object with purpose', (assert) => {
 		const encryption = new MessageVerifier(SECRET)
 		const signed = encryption.sign({ username: 'virk' }, undefined, 'login')
-		assert.equal(base64.urlDecode(signed.split('.')[0]), '{"message":{"username":"virk"},"purpose":"login"}')
+		assert.equal(
+			base64.urlDecode(signed.split('.')[0]),
+			'{"message":{"username":"virk"},"purpose":"login"}'
+		)
 	})
 
 	test('unsign value', (assert) => {

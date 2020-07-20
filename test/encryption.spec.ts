@@ -29,7 +29,10 @@ test.group('Encryption', () => {
 
 	test('ensure iv is random for each encryption call', (assert) => {
 		const encryption = new Encryption({ secret: SECRET })
-		assert.notEqual(encryption.encrypt({ username: 'virk' }), encryption.encrypt({ username: 'virk' }))
+		assert.notEqual(
+			encryption.encrypt({ username: 'virk' }),
+			encryption.encrypt({ username: 'virk' })
+		)
 	})
 
 	test('decrypt encrypted value', (assert) => {

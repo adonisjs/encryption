@@ -45,7 +45,11 @@ export class MessageVerifier implements MessageVerifierContract {
 	 */
 	public sign(value: any, expiresAt?: string | number, purpose?: string) {
 		if (value === null || value === undefined) {
-			throw new Exception('"MessageVerifier.sign" cannot sign null or undefined values', 500, 'E_RUNTIME_EXCEPTION')
+			throw new Exception(
+				'"MessageVerifier.sign" cannot sign null or undefined values',
+				500,
+				'E_RUNTIME_EXCEPTION'
+			)
 		}
 
 		const encoded = base64.urlEncode(new MessageBuilder().build(value, expiresAt, purpose))
@@ -57,7 +61,11 @@ export class MessageVerifier implements MessageVerifierContract {
 	 */
 	public unsign<T extends any>(value: string, purpose?: string): null | T {
 		if (typeof value !== 'string') {
-			throw new Exception('"MessageVerifier.unsign" expects a string value', 500, 'E_RUNTIME_EXCEPTION')
+			throw new Exception(
+				'"MessageVerifier.unsign" expects a string value',
+				500,
+				'E_RUNTIME_EXCEPTION'
+			)
 		}
 
 		/**
