@@ -15,6 +15,7 @@ import { base64 as utilsBase64, randomString, Exception, MessageBuilder } from '
 
 import { Hmac } from '../Hmac'
 import { MessageVerifier } from '../MessageVerifier'
+import { AppKeyException } from '../Exceptions/AppKeyException'
 
 /**
  * The encryption class allows encrypting and decrypting values using `aes-256-cbc` or `aes-128-cbc`
@@ -62,19 +63,11 @@ export class Encryption implements EncryptionContract {
 	 */
 	private validateSecret() {
 		if (typeof this.options.secret !== 'string') {
-			throw new Exception(
-				'Missing "app.appKey". Makes sure to define it inside the config file',
-				500,
-				'E_MISSING_APP_KEY'
-			)
+			throw AppKeyException.missingAppKey()
 		}
 
 		if (this.options.secret.length < 16) {
-			throw new Exception(
-				'"app.appKey" must have minimum length of 16 characters',
-				500,
-				'E_INVALID_APP_KEY'
-			)
+			throw AppKeyException.insecureAppKey()
 		}
 	}
 

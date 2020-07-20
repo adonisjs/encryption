@@ -8,7 +8,8 @@
 		"build/providers",
 		"build/src",
 		"build/standalone.d.ts",
-		"build/standalone.js"
+		"build/standalone.js",
+		"build/exceptions.json"
 	],
 	"scripts": {
 		"mrm": "mrm --preset=@adonisjs/mrm-preset",
@@ -85,5 +86,8 @@
 	"np": {
 		"contents": ".",
 		"anyBranch": false
+	},
+	"adonisjs": {
+		"exceptions": "./build/exceptions.json"
 	}
 }

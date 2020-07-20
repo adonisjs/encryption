@@ -46,9 +46,6 @@ test.group('Encryption Provider', () => {
 		await registrar.useProviders(['./providers/EncryptionProvider']).registerAndBoot()
 
 		const fn = () => ioc.use('Adonis/Core/Encryption')
-		assert.throw(
-			fn,
-			'E_MISSING_APP_KEY: Missing "app.appKey". Makes sure to define it inside the config file'
-		)
+		assert.throw(fn, 'E_MISSING_APP_KEY: The value for "app.appKey" is undefined')
 	})
 })
