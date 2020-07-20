@@ -1,71 +1,41 @@
 <div align="center">
-   <img src="https://res.cloudinary.com/adonisjs/image/upload/q_100/v1564392111/adonis-banner_o9lunk.png" width="600px">
+  <img src="https://res.cloudinary.com/adonisjs/image/upload/q_100/v1558612869/adonis-readme_zscycu.jpg" width="600px">
 </div>
 
-# Encryption
-> AdonisJs provider to encrypt and decrypt values
+<br />
 
-[![circleci-image]][circleci-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url]
+<div align="center">
+  <h3>AdonisJS Encryption Provider</h3>
+  <p>The encryption provider to encrypt, sign and base64 encode values</p>
+</div>
 
-This module is used by [AdonisJs](https://adonisjs.com) to encrypt/decrypt values using a secret key.
+<br />
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-## Table of contents
+<div align="center">
 
-- [Usage](#usage)
-- [Using with AdonisJs](#using-with-adonisjs)
-- [Audit report](#audit-report)
+[![circleci-image]][circleci-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url] [![audit-report-image]][audit-report-url]
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+</div>
 
-## Usage
+<div align="center">
+  <h3>
+    <a href="https://preview.adonisjs.com">
+      Website
+    </a>
+    <span> | </span>
+    <a href="https://preview.adonisjs.com/guides/security/encryption">
+      Guides
+    </a>
+    <span> | </span>
+    <a href="CONTRIBUTING.md">
+      Contributing
+    </a>
+  </h3>
+</div>
 
-Install the package from npm registry as follows:
-
-```sh
-npm i @adonisjs/encryption
-
-# yarn
-yarn add @adonisjs/encryption
-```
-
-and then use it as follows:
-
-```ts
-import { Encryption } from '@adonisjs/encryption/build/standalone'
-const encryption = new Encryption({ secret: 'verylongandrandom32characterskey' })
-
-const encryptedValue = encryption.encrypt('hello-world')
-encryption.decrypt(encryptedValue) // 'hello-world'
-```
-
-## Using with AdonisJs
-The `@adonisjs/core` module includes this module by default. However, here's how you can set it up manually.
-
-```ts
-const providers = [
-  '@adonisjs/encryption'
-]
-```
-
-And then also register the typings file inside `tsconfig.json` file.
-
-```json
-{
-  "files": ["./node_modules/@adonisjs/encryption/build/adonis-typings/encryption.d.ts"]
-}
-```
-
-And use it as follows:
-
-```ts
-import Encryption from '@ioc:Adonis/Core/Encryption'
-Encryption.encrypt('password')
-```
-
-## Audit report
-[Click here](https://htmlpreview.github.io/?https://github.com/adonisjs/encryption/blob/develop/npm-audit.html) to see the latest npm audit report.
+<div align="center">
+  <sub>Built with ❤︎ by <a href="https://twitter.com/AmanVirk1">Harminder Virk</a>
+</div>
 
 [circleci-image]: https://img.shields.io/circleci/project/github/adonisjs/encryption/master.svg?style=for-the-badge&logo=circleci
 [circleci-url]: https://circleci.com/gh/adonisjs/encryption "circleci"
@@ -78,3 +48,6 @@ Encryption.encrypt('password')
 
 [license-image]: https://img.shields.io/npm/l/@adonisjs/encryption?color=blueviolet&style=for-the-badge
 [license-url]: LICENSE.md "license"
+
+[audit-report-image]: https://img.shields.io/badge/-Audit%20Report-blueviolet?style=for-the-badge
+[audit-report-url]: https://htmlpreview.github.io/?https://github.com/adonisjs/encryption/blob/develop/npm-audit.html "audit-report"
