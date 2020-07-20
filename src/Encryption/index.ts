@@ -26,7 +26,7 @@ export class Encryption implements EncryptionContract {
 	 * The key for signing and encrypting values. It is derived
 	 * from the user provided secret.
 	 */
-	private cryptoKey = createHash('sha256').update(this.options.secret).digest()
+	private cryptoKey: Buffer
 
 	/**
 	 * Use `dot` as a separator for joining encrypted value, iv and the
@@ -39,7 +39,7 @@ export class Encryption implements EncryptionContract {
 	 * Reference to the instance of message verifier for signing
 	 * and verifying values.
 	 */
-	public verifier = new MessageVerifier(this.options.secret)
+	public verifier: MessageVerifier
 
 	/**
 	 * Reference to base64 object for base64 encoding/decoding values
@@ -53,6 +53,8 @@ export class Encryption implements EncryptionContract {
 
 	constructor(private options: EncryptionOptions) {
 		this.validateSecret()
+		this.cryptoKey = createHash('sha256').update(this.options.secret).digest()
+		this.verifier = new MessageVerifier(this.options.secret)
 	}
 
 	/**
