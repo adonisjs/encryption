@@ -7,17 +7,17 @@
  * file that was distributed with this source code.
  */
 
-import { IocContract } from '@adonisjs/fold'
+import { ApplicationContract } from '@ioc:Adonis/Core/Application'
 
 /**
  * Encryption provider to binding encryption class to the container
  */
 export default class EncryptionProvider {
-	constructor(protected container: IocContract) {}
+	constructor(protected app: ApplicationContract) {}
 
 	public register() {
-		this.container.singleton('Adonis/Core/Encryption', () => {
-			const Config = this.container.use('Adonis/Core/Config')
+		this.app.container.singleton('Adonis/Core/Encryption', () => {
+			const Config = this.app.container.use('Adonis/Core/Config')
 			const { Encryption } = require('../src/Encryption')
 			return new Encryption({ secret: Config.get('app.appKey') })
 		})
