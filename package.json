@@ -40,7 +40,7 @@
 	},
 	"homepage": "https://github.com/adonisjs/encryption#readme",
 	"devDependencies": {
-		"@adonisjs/application": "^3.0.5",
+		"@adonisjs/application": "^3.0.10",
 		"@adonisjs/mrm-preset": "^2.4.0",
 		"@adonisjs/require-ts": "^1.0.0",
 		"@poppinss/dev-utils": "^1.0.10",
