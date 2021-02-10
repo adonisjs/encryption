@@ -1,98 +1,98 @@
 {
-	"name": "@adonisjs/encryption",
-	"version": "3.0.7",
-	"description": "Encryption provider for AdonisJs",
-	"main": "build/providers/EncryptionProvider.js",
-	"files": [
-		"build/adonis-typings",
-		"build/providers",
-		"build/src",
-		"build/standalone.d.ts",
-		"build/standalone.js",
-		"build/exceptions.json"
-	],
-	"scripts": {
-		"mrm": "mrm --preset=@adonisjs/mrm-preset",
-		"pretest": "npm run lint",
-		"test": "node japaFile.js",
-		"clean": "del build",
-		"compile": "npm run lint && npm run clean && tsc",
-		"build": "npm run compile",
-		"commit": "git-cz",
-		"release": "np",
-		"version": "npm run build",
-		"format": "prettier --write .",
-		"prepublishOnly": "npm run build",
-		"lint": "eslint . --ext=.ts",
-		"sync-labels": "github-label-sync --labels ./node_modules/@adonisjs/mrm-preset/gh-labels.json adonisjs/encryption"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/adonisjs/encryption.git"
-	},
-	"keywords": [
-		"encryption"
-	],
-	"author": "virk,adonisjs",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/adonisjs/encryption/issues"
-	},
-	"homepage": "https://github.com/adonisjs/encryption#readme",
-	"devDependencies": {
-		"@adonisjs/application": "^4.0.2",
-		"@adonisjs/mrm-preset": "^3.0.0",
-		"@adonisjs/require-ts": "^2.0.2",
-		"@poppinss/dev-utils": "^1.1.0",
-		"@types/node": "^14.14.25",
-		"commitizen": "^4.2.3",
-		"cz-conventional-changelog": "^3.3.0",
-		"del-cli": "^3.0.1",
-		"eslint": "^7.19.0",
-		"eslint-config-prettier": "^7.2.0",
-		"eslint-plugin-adonis": "^1.2.0",
-		"eslint-plugin-prettier": "^3.3.1",
-		"github-label-sync": "^2.0.0",
-		"husky": "^5.0.9",
-		"japa": "^3.1.1",
-		"mrm": "^2.5.18",
-		"np": "^7.3.0",
-		"prettier": "^2.2.1",
-		"typescript": "^4.1.4"
-	},
-	"nyc": {
-		"exclude": [
-			"test"
-		],
-		"extension": [
-			".ts"
-		]
-	},
-	"husky": {
-		"hooks": {
-			"commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
-		}
-	},
-	"config": {
-		"commitizen": {
-			"path": "cz-conventional-changelog"
-		}
-	},
-	"dependencies": {
-		"@poppinss/utils": "^3.0.2"
-	},
-	"peerDependencies": {
-		"@adonisjs/application": "^4.0.0"
-	},
-	"np": {
-		"contents": ".",
-		"anyBranch": false
-	},
-	"adonisjs": {
-		"exceptions": "./build/exceptions.json"
-	},
-	"publishConfig": {
-		"access": "public",
-		"tag": "latest"
-	}
+  "name": "@adonisjs/encryption",
+  "version": "3.0.7",
+  "description": "Encryption provider for AdonisJs",
+  "main": "build/providers/EncryptionProvider.js",
+  "files": [
+    "build/adonis-typings",
+    "build/providers",
+    "build/src",
+    "build/standalone.d.ts",
+    "build/standalone.js",
+    "build/exceptions.json"
+  ],
+  "scripts": {
+    "mrm": "mrm --preset=@adonisjs/mrm-preset",
+    "pretest": "npm run lint",
+    "test": "node japaFile.js",
+    "clean": "del build",
+    "compile": "npm run lint && npm run clean && tsc",
+    "build": "npm run compile",
+    "commit": "git-cz",
+    "release": "np",
+    "version": "npm run build",
+    "format": "prettier --write .",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint . --ext=.ts",
+    "sync-labels": "github-label-sync --labels ./node_modules/@adonisjs/mrm-preset/gh-labels.json adonisjs/encryption"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adonisjs/encryption.git"
+  },
+  "keywords": [
+    "encryption"
+  ],
+  "author": "virk,adonisjs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adonisjs/encryption/issues"
+  },
+  "homepage": "https://github.com/adonisjs/encryption#readme",
+  "devDependencies": {
+    "@adonisjs/application": "^4.0.2",
+    "@adonisjs/mrm-preset": "^3.0.0",
+    "@adonisjs/require-ts": "^2.0.2",
+    "@poppinss/dev-utils": "^1.1.0",
+    "@types/node": "^14.14.25",
+    "commitizen": "^4.2.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "del-cli": "^3.0.1",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-adonis": "^1.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "github-label-sync": "^2.0.0",
+    "husky": "^5.0.9",
+    "japa": "^3.1.1",
+    "mrm": "^2.5.18",
+    "np": "^7.3.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.4"
+  },
+  "nyc": {
+    "exclude": [
+      "test"
+    ],
+    "extension": [
+      ".ts"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@poppinss/utils": "^3.0.2"
+  },
+  "peerDependencies": {
+    "@adonisjs/application": "^4.0.0"
+  },
+  "np": {
+    "contents": ".",
+    "anyBranch": false
+  },
+  "adonisjs": {
+    "exceptions": "./build/exceptions.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  }
 }

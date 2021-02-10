@@ -18,37 +18,37 @@ const SECRET = 'averylongradom32charactersstring'
 const fs = new Filesystem(join(__dirname, 'app'))
 
 async function setup(setupAppKey: boolean = true) {
-	await fs.add('.env', '')
-	await fs.add('config/app.ts', setupAppKey ? `export const appKey = '${SECRET}'` : '')
+  await fs.add('.env', '')
+  await fs.add('config/app.ts', setupAppKey ? `export const appKey = '${SECRET}'` : '')
 
-	const app = new Application(fs.basePath, 'web', {
-		providers: ['../../providers/EncryptionProvider'],
-	})
+  const app = new Application(fs.basePath, 'web', {
+    providers: ['../../providers/EncryptionProvider'],
+  })
 
-	app.setup()
-	app.registerProviders()
-	await app.bootProviders()
+  app.setup()
+  app.registerProviders()
+  await app.bootProviders()
 
-	return app
+  return app
 }
 
 test.group('Encryption Provider', (group) => {
-	group.afterEach(async () => {
-		await fs.cleanup()
-	})
+  group.afterEach(async () => {
+    await fs.cleanup()
+  })
 
-	test('register encryption provider', async (assert) => {
-		const app = await setup()
-		assert.instanceOf(app.container.use('Adonis/Core/Encryption'), Encryption)
-		assert.deepEqual(
-			app.container.use('Adonis/Core/Encryption'),
-			app.container.use('Adonis/Core/Encryption')
-		)
-	})
+  test('register encryption provider', async (assert) => {
+    const app = await setup()
+    assert.instanceOf(app.container.use('Adonis/Core/Encryption'), Encryption)
+    assert.deepEqual(
+      app.container.use('Adonis/Core/Encryption'),
+      app.container.use('Adonis/Core/Encryption')
+    )
+  })
 
-	test('raise error when appKey is missing', async (assert) => {
-		const app = await setup(false)
-		const fn = () => app.container.use('Adonis/Core/Encryption')
-		assert.throw(fn, 'E_MISSING_APP_KEY: The value for "app.appKey" is undefined')
-	})
+  test('raise error when appKey is missing', async (assert) => {
+    const app = await setup(false)
+    const fn = () => app.container.use('Adonis/Core/Encryption')
+    assert.throw(fn, 'E_MISSING_APP_KEY: The value for "app.appKey" is undefined')
+  })
 })
