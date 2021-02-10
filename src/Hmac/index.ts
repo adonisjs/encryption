@@ -8,7 +8,7 @@
  */
 
 import { createHmac } from 'crypto'
-import { base64, safeEqual } from '@poppinss/utils'
+import { base64, safeEqual } from '@poppinss/utils/build/helpers'
 
 /**
  * A generic class for generating SHA-256 Hmac for verifying the value

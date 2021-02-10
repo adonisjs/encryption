@@ -9,9 +9,10 @@
 
 /// <reference path="../../adonis-typings/encryption.ts" />
 
+import { Exception } from '@poppinss/utils'
 import { createHash, createCipheriv, createDecipheriv } from 'crypto'
 import { EncryptionContract, EncryptionOptions } from '@ioc:Adonis/Core/Encryption'
-import { base64 as utilsBase64, randomString, Exception, MessageBuilder } from '@poppinss/utils'
+import { base64 as utilsBase64, MessageBuilder, string } from '@poppinss/utils/build/helpers'
 
 import { Hmac } from '../Hmac'
 import { MessageVerifier } from '../MessageVerifier'
@@ -78,7 +79,7 @@ export class Encryption implements EncryptionContract {
 		/**
 		 * Using a random string as the iv for generating unpredictable values
 		 */
-		const iv = randomString(16)
+		const iv = string.generateRandom(16)
 
 		/**
 		 * Creating chiper
@@ -93,7 +94,7 @@ export class Encryption implements EncryptionContract {
 		/**
 		 * Set final to the cipher instance and encrypt it
 		 */
-		const encrypted = Buffer.concat([cipher.update(encodedValue, 'utf8'), cipher.final()])
+		const encrypted = Buffer.concat([cipher.update(encodedValue, 'utf-8'), cipher.final()])
 
 		/**
 		 * Concatenate `encrypted value` and `iv` by urlEncoding them. The concatenation is required
@@ -130,7 +131,7 @@ export class Encryption implements EncryptionContract {
 		/**
 		 * Make sure we are able to urlDecode the encrypted value
 		 */
-		const encrypted = this.base64.urlDecode(encryptedEncoded, 'binary')
+		const encrypted = this.base64.urlDecode(encryptedEncoded, 'base64')
 		if (!encrypted) {
 			return null
 		}
@@ -162,7 +163,7 @@ export class Encryption implements EncryptionContract {
 		 */
 		try {
 			const decipher = createDecipheriv(this.algorithm, this.cryptoKey, iv)
-			const decrypted = decipher.update(encrypted, 'binary', 'utf8') + decipher.final('utf8')
+			const decrypted = decipher.update(encrypted, 'base64', 'utf8') + decipher.final('utf8')
 			return new MessageBuilder().verify(decrypted, purpose)
 		} catch (error) {
 			return null

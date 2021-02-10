@@ -18,7 +18,7 @@ export default class EncryptionProvider {
 
 	public register() {
 		this.app.container.singleton('Adonis/Core/Encryption', () => {
-			const Config = this.app.container.use('Adonis/Core/Config')
+			const Config = this.app.container.resolveBinding('Adonis/Core/Config')
 			const { Encryption } = require('../src/Encryption')
 			return new Encryption({ secret: Config.get('app.appKey') })
 		})
