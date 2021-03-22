@@ -13,6 +13,7 @@ import { Filesystem } from '@poppinss/dev-utils'
 import { Application } from '@adonisjs/application'
 
 import { Encryption } from '../src/Encryption'
+import { MessageVerifier } from '../src/MessageVerifier'
 
 const SECRET = 'averylongradom32charactersstring'
 const fs = new Filesystem(join(__dirname, 'app'))
@@ -50,5 +51,10 @@ test.group('Encryption Provider', (group) => {
     const app = await setup(false)
     const fn = () => app.container.use('Adonis/Core/Encryption')
     assert.throw(fn, 'E_MISSING_APP_KEY: The value for "app.appKey" is undefined')
+  })
+
+  test('access verifier from encryption module', async (assert) => {
+    const app = await setup()
+    assert.instanceOf(app.container.use('Adonis/Core/Encryption').verifier, MessageVerifier)
   })
 })
