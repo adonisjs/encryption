@@ -23,7 +23,7 @@
       Website
     </a>
     <span> | </span>
-    <a href="https://preview.adonisjs.com/guides/security/encryption">
+    <a href="https://docs.adonisjs.com/guides/security/encryption">
       Guides
     </a>
     <span> | </span>
