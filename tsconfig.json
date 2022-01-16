@@ -3,5 +3,7 @@
   "compilerOptions": {
     "resolveJsonModule": true
   },
-  "files": ["./node_modules/@adonisjs/application/build/adonis-typings/index.d.ts"]
+  "files": [
+    "./node_modules/@adonisjs/application/build/adonis-typings/index.d.ts"
+  ]
 }
