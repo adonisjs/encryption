@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import test from 'japa'
+import { test } from '@japa/runner'
 import { join } from 'path'
 import { Filesystem } from '@poppinss/dev-utils'
 import { Application } from '@adonisjs/application'
@@ -34,11 +34,11 @@ async function setup(setupAppKey: boolean = true) {
 }
 
 test.group('Encryption Provider', (group) => {
-  group.afterEach(async () => {
+  group.each.teardown(async () => {
     await fs.cleanup()
   })
 
-  test('register encryption provider', async (assert) => {
+  test('register encryption provider', async ({ assert }) => {
     const app = await setup()
     assert.instanceOf(app.container.use('Adonis/Core/Encryption'), Encryption)
     assert.deepEqual(
@@ -47,13 +47,13 @@ test.group('Encryption Provider', (group) => {
     )
   })
 
-  test('raise error when appKey is missing', async (assert) => {
+  test('raise error when appKey is missing', async ({ assert }) => {
     const app = await setup(false)
     const fn = () => app.container.use('Adonis/Core/Encryption')
-    assert.throw(fn, 'E_MISSING_APP_KEY: The value for "app.appKey" is undefined')
+    assert.throws(fn, 'E_MISSING_APP_KEY: The value for "app.appKey" is undefined')
   })
 
-  test('access verifier from encryption module', async (assert) => {
+  test('access verifier from encryption module', async ({ assert }) => {
     const app = await setup()
     assert.instanceOf(app.container.use('Adonis/Core/Encryption').verifier, MessageVerifier)
   })
