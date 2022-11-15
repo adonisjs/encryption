@@ -1,33 +1,37 @@
 /*
  * @adonisjs/encryption
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) AdonisJS
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-import { createHmac } from 'crypto'
-import { base64, safeEqual } from '@poppinss/utils/build/helpers'
+import { createHmac } from 'node:crypto'
+import { base64, safeEqual } from '@poppinss/utils'
 
 /**
  * A generic class for generating SHA-256 Hmac for verifying the value
  * integrity.
  */
 export class Hmac {
-  constructor(private key: Buffer) {}
+  #key: Buffer
+
+  constructor(key: Buffer) {
+    this.#key = key
+  }
 
   /**
    * Generate the hmac
    */
-  public generate(value: string) {
-    return base64.urlEncode(createHmac('sha256', this.key).update(value).digest())
+  generate(value: string) {
+    return base64.urlEncode(createHmac('sha256', this.#key).update(value).digest())
   }
 
   /**
    * Compare raw value against an existing hmac
    */
-  public compare(value: string, existingHmac: string) {
+  compare(value: string, existingHmac: string) {
     return safeEqual(this.generate(value), existingHmac)
   }
 }

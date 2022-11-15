@@ -1,20 +1,33 @@
 /*
  * @adonisjs/encryption
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) AdonisJS
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-/// <reference path="../adonis-typings/encryption.ts" />
-
 import { test } from '@japa/runner'
-import { Encryption } from '../src/Encryption'
+import { Encryption } from '../src/encryption.js'
 
 const SECRET = 'averylongradom32charactersstring'
 
 test.group('Encryption', () => {
+  test('fail when secret is missing', ({ assert }) => {
+    assert.throws(
+      // @ts-expect-error
+      () => new Encryption({ secret: null }),
+      'Missing "app.appKey". The key is required to encrypt values'
+    )
+  })
+
+  test('fail when secret is not bigger than 16chars', ({ assert }) => {
+    assert.throws(
+      () => new Encryption({ secret: 'helloworld' }),
+      'The value of "app.appKey" should be atleast 16 charcaters long'
+    )
+  })
+
   test('encrypt value', ({ assert }) => {
     const encryption = new Encryption({ secret: SECRET })
     assert.notEqual(encryption.encrypt('hello-world'), 'hello-world')
@@ -35,6 +48,12 @@ test.group('Encryption', () => {
     )
   })
 
+  test('return null when decrypting non-string values', ({ assert }) => {
+    const encryption = new Encryption({ secret: SECRET })
+    // @ts-expect-error
+    assert.isNull(encryption.decrypt(null))
+  })
+
   test('decrypt encrypted value', ({ assert }) => {
     const encryption = new Encryption({ secret: SECRET })
     const encrypted = encryption.encrypt({ username: 'virk' })
@@ -48,7 +67,7 @@ test.group('Encryption', () => {
 
   test('return null when unable to decode encrypted value', ({ assert }) => {
     const encryption = new Encryption({ secret: SECRET })
-    assert.isNull(encryption.decrypt('foo--bar--baz'))
+    assert.isNull(encryption.decrypt('foo.bar.baz'))
   })
 
   test('return null when hash is tampered', ({ assert }) => {
