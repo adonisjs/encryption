@@ -8,7 +8,7 @@
  */
 
 import { createHash } from 'node:crypto'
-import { base64, MessageBuilder } from '@poppinss/utils'
+import { base64, MessageBuilder, RuntimeException } from '@poppinss/utils'
 import { Hmac } from './hmac.js'
 
 /**
@@ -51,7 +51,7 @@ export class MessageVerifier {
    */
   sign(payload: any, expiresIn?: string | number, purpose?: string) {
     if (payload === null || payload === undefined) {
-      throw new Error(`Cannot sign "${payload}" value`)
+      throw new RuntimeException(`Cannot sign "${payload}" value`)
     }
 
     const encoded = base64.urlEncode(new MessageBuilder().build(payload, expiresIn, purpose))
