@@ -8,3 +8,5 @@
  */
 
 export { Encryption as default } from './src/encryption.js'
+export { InsecureAppKeyException } from './src/exceptions/insecure_app_key_exception.js'
+export { MissingAppKeyException } from './src/exceptions/missing_app_key_exception.js'
