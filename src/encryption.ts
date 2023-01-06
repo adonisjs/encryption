@@ -12,10 +12,9 @@ import { base64, MessageBuilder } from '@poppinss/utils'
 import { createHash, createCipheriv, createDecipheriv } from 'node:crypto'
 
 import { Hmac } from './hmac.js'
+import * as errors from './exceptions/main.js'
 import type { EncryptionOptions } from './types.js'
 import { MessageVerifier } from './message_verifier.js'
-import { MissingAppKeyException } from './exceptions/missing_app_key_exception.js'
-import { InsecureAppKeyException } from './exceptions/insecure_app_key_exception.js'
 
 /**
  * The encryption class allows encrypting and decrypting values using `aes-256-cbc` or `aes-128-cbc`
@@ -67,11 +66,11 @@ export class Encryption {
    */
   #validateSecret(secret?: string) {
     if (typeof secret !== 'string') {
-      throw new MissingAppKeyException()
+      throw new errors.E_MISSING_APP_KEY()
     }
 
     if (secret.length < 16) {
-      throw new InsecureAppKeyException()
+      throw new errors.E_INSECURE_APP_KEY()
     }
   }
 
