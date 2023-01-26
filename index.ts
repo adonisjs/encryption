@@ -7,7 +7,5 @@
  * file that was distributed with this source code.
  */
 
-import * as errors from './src/encryption.js'
-
-export { errors }
+export * as errors from './src/exceptions.js'
 export { Encryption } from './src/encryption.js'

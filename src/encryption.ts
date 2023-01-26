@@ -12,7 +12,7 @@ import { base64, MessageBuilder } from '@poppinss/utils'
 import { createHash, createCipheriv, createDecipheriv } from 'node:crypto'
 
 import { Hmac } from './hmac.js'
-import * as errors from './exceptions/main.js'
+import * as errors from './exceptions.js'
 import type { EncryptionOptions } from './types.js'
 import { MessageVerifier } from './message_verifier.js'
 
