@@ -1,6 +1,6 @@
 {
   "name": "@adonisjs/encryption",
-  "version": "5.1.2-1",
+  "version": "5.1.2-2",
   "description": "Encryption provider for AdonisJs",
   "main": "build/index.js",
   "type": "module",
