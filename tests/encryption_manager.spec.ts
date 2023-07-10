@@ -95,15 +95,4 @@ test.group('Encryption manager', () => {
     const encrypted = manager.encrypt('hello world')
     assert.deepEqual(manager.decrypt(encrypted), 'hello world')
   })
-
-  test('test if needed re-encryption using the default driver', ({ assert }) => {
-    const manager = new EncryptionManager({
-      default: 'legacy',
-      list: {
-        legacy: () => new Legacy({ key: SECRET }),
-      },
-    })
-
-    assert.isTrue(manager.needsReEncrypt('hello-world'))
-  })
 })

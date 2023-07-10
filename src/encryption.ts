@@ -40,11 +40,4 @@ export class Encryption implements EncryptionDriverContract {
   decrypt<T extends any>(value: string, purpose?: string): T | null {
     return this.#driver.decrypt(value, purpose)
   }
-
-  /**
-   * Returns a boolean telling if the value needs a re-encryption or not.
-   */
-  needsReEncrypt(value: string): boolean {
-    return this.#driver.needsReEncrypt(value)
-  }
 }

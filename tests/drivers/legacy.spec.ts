@@ -28,11 +28,6 @@ test.group('Legacy', () => {
     )
   })
 
-  test('need re-encrypt', ({ assert }) => {
-    const encryption = new Legacy({ key: SECRET })
-    assert.isTrue(encryption.needsReEncrypt('hello-world'))
-  })
-
   test('encrypt value', ({ assert }) => {
     const encryption = new Legacy({ key: SECRET })
     assert.notEqual(encryption.encrypt('hello-world'), 'hello-world')

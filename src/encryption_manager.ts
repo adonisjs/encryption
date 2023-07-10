@@ -89,8 +89,4 @@ export class EncryptionManager<KnownEncrypters extends Record<string, ManagerDri
   encrypt(payload: any, expiresIn?: string | number, purpose?: string): string {
     return this.use().encrypt(payload, expiresIn, purpose)
   }
-
-  needsReEncrypt(value: string): boolean {
-    return this.use().needsReEncrypt(value)
-  }
 }

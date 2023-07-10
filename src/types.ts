@@ -31,11 +31,6 @@ export interface EncryptionDriverContract {
    * Decrypt value and verify it against a purpose
    */
   decrypt<T extends any>(value: string, purpose?: string): T | null
-
-  /**
-   * Returns a boolean telling if the value needs a re-encryption or not.
-   */
-  needsReEncrypt(value: string): boolean
 }
 
 /**
