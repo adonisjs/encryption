@@ -127,12 +127,4 @@ export class Legacy extends EncryptionDriver implements EncryptionDriverContract
       return null
     }
   }
-
-  /**
-   * Returns a boolean telling if the value needs a re-encryption or not.
-   * Legacy driver always returns true.
-   */
-  needsReEncrypt(_value: string): boolean {
-    return true
-  }
 }
