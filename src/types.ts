@@ -45,3 +45,8 @@ export interface BaseConfig {
 }
 
 export interface LegacyConfig extends BaseConfig {}
+
+export type Config<KnownEncrypters extends Record<string, ManagerDriverFactory>> = {
+  default?: keyof KnownEncrypters
+  list: KnownEncrypters
+}

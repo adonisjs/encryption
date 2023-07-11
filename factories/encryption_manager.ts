@@ -7,14 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import { ManagerDriverFactory } from '../src/types.js'
+import { Config, ManagerDriverFactory } from '../src/types.js'
 import { Legacy } from '../src/drivers/legacy.js'
 import { EncryptionManager } from '../src/encryption_manager.js'
-
-type Config<KnownEncrypters extends Record<string, ManagerDriverFactory>> = {
-  default?: keyof KnownEncrypters
-  list: KnownEncrypters
-}
 
 export class EncryptionManagerFactory<
   KnownEncrypters extends Record<string, ManagerDriverFactory> = { legacy: () => Legacy }
