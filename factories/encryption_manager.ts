@@ -12,7 +12,7 @@ import { Legacy } from '../src/drivers/legacy.js'
 import { EncryptionManager } from '../src/encryption_manager.js'
 
 export class EncryptionManagerFactory<
-  KnownEncrypters extends Record<string, ManagerDriverFactory> = { legacy: () => Legacy }
+  KnownEncrypters extends Record<string, ManagerDriverFactory>
 > {
   /**
    * Config accepted by encryption manager
