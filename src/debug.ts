@@ -8,4 +8,4 @@
  */
 
 import { debuglog } from 'node:util'
-export default debuglog('adonisjs:hash')
+export default debuglog('adonisjs:encryption')
