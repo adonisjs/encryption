@@ -7,4 +7,5 @@
  * file that was distributed with this source code.
  */
 
-export { EncryptionManagerFactory } from './encryption_manager.js'
+import { debuglog } from 'node:util'
+export default debuglog('adonisjs:encryption')
