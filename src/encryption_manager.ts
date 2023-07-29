@@ -12,6 +12,7 @@ import { RuntimeException } from '@poppinss/utils'
 import debug from './debug.js'
 import { Encryption } from './encryption.js'
 import type { EncryptionDriverContract, ManagerDriverFactory } from './types.js'
+import { MessageVerifier } from './message_verifier.js'
 
 export class EncryptionManager<KnownEncrypters extends Record<string, ManagerDriverFactory>>
   implements EncryptionDriverContract
@@ -82,11 +83,15 @@ export class EncryptionManager<KnownEncrypters extends Record<string, ManagerDri
     return encryption
   }
 
-  decrypt<T extends any>(value: string, purpose?: string): T | null {
-    return this.use().decrypt(value, purpose)
+  getMessageVerifier(): MessageVerifier {
+    return this.use().getMessageVerifier()
   }
 
   encrypt(payload: any, expiresIn?: string | number, purpose?: string): string {
     return this.use().encrypt(payload, expiresIn, purpose)
+  }
+
+  decrypt<T extends any>(value: string, purpose?: string): T | null {
+    return this.use().decrypt(value, purpose)
   }
 }

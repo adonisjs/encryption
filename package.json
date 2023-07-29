@@ -13,7 +13,8 @@
   "exports": {
     ".": "./build/index.js",
     "./types": "./build/src/types.js",
-    "./factories": "./build/factories/main.js"
+    "./factories": "./build/factories/main.js",
+    "./drivers/legacy": "./build/src/drivers/legacy.js"
   },
   "engines": {
     "node": ">=18.16.0"

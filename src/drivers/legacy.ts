@@ -10,11 +10,11 @@
 import { createCipheriv, createDecipheriv } from 'node:crypto'
 import string from '@poppinss/utils/string'
 import { MessageBuilder } from '@poppinss/utils'
-import { EncryptionDriver } from '../encryption_driver.js'
+import { BaseDriver } from './base_driver.js'
 import { Hmac } from '../hmac.js'
 import type { EncryptionDriverContract, LegacyConfig } from '../types.js'
 
-export class Legacy extends EncryptionDriver implements EncryptionDriverContract {
+export class Legacy extends BaseDriver implements EncryptionDriverContract {
   constructor(config: LegacyConfig) {
     super(config)
   }

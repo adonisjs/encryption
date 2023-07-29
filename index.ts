@@ -9,3 +9,4 @@
 
 export * as errors from './src/exceptions.js'
 export { Encryption } from './src/encryption.js'
+export { EncryptionManager } from './src/encryption_manager.js'

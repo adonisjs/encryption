@@ -7,10 +7,17 @@
  * file that was distributed with this source code.
  */
 
+import { MessageVerifier } from './message_verifier.js'
+
 /**
  * The contract Encryption drivers should adhere to
  */
 export interface EncryptionDriverContract {
+  /**
+   * Returns the message verifier instance for a given driver
+   */
+  getMessageVerifier(): MessageVerifier
+
   /**
    * Encrypt a given piece of value using the app secret. A wide range of
    * data types are supported.

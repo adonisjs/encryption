@@ -9,11 +9,11 @@
 
 import { createHash } from 'node:crypto'
 import { base64 } from '@poppinss/utils'
-import * as errors from './exceptions.js'
-import { MessageVerifier } from './message_verifier.js'
-import type { BaseConfig } from './types.js'
+import * as errors from '../exceptions.js'
+import { MessageVerifier } from '../message_verifier.js'
+import type { BaseConfig } from '../types.js'
 
-export class EncryptionDriver {
+export abstract class BaseDriver {
   /**
    * The key for signing and encrypting values. It is derived
    * from the user provided secret.
@@ -37,7 +37,7 @@ export class EncryptionDriver {
    */
   base64: typeof base64 = base64
 
-  constructor(config: BaseConfig) {
+  protected constructor(config: BaseConfig) {
     this.#validateSecret(config.key)
     this.cryptoKey = createHash('sha256').update(config.key).digest()
     this.verifier = new MessageVerifier(config.key)
@@ -55,4 +55,32 @@ export class EncryptionDriver {
       throw new errors.E_INSECURE_APP_KEY()
     }
   }
+
+  /**
+   * Returns the message verifier instance
+   */
+  getMessageVerifier() {
+    return this.verifier
+  }
+
+  /**
+   * Encrypt a given piece of value using the app secret. A wide range of
+   * data types are supported.
+   *
+   * - String
+   * - Arrays
+   * - Objects
+   * - Booleans
+   * - Numbers
+   * - Dates
+   *
+   * You can optionally define a purpose for which the value was encrypted and
+   * mentioning a different purpose/no purpose during decrypt will fail.
+   */
+  abstract encrypt(payload: any, expiresIn?: string | number, purpose?: string): string
+
+  /**
+   * Decrypt value and verify it against a purpose
+   */
+  abstract decrypt<T extends any>(value: string, purpose?: string): T | null
 }

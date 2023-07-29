@@ -17,6 +17,13 @@ export class Encryption implements EncryptionDriverContract {
   }
 
   /**
+   * Returns the message verifier instance for a given driver
+   */
+  getMessageVerifier() {
+    return this.#driver.getMessageVerifier()
+  }
+
+  /**
    * Encrypt a given piece of value using the app secret. A wide range of
    * data types are supported.
    *
