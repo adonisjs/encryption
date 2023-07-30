@@ -48,11 +48,11 @@ export abstract class BaseDriver {
    */
   #validateSecret(secret?: string) {
     if (typeof secret !== 'string') {
-      throw new errors.E_MISSING_APP_KEY()
+      throw new errors.E_MISSING_ENCRYPTER_KEY()
     }
 
     if (secret.length < 16) {
-      throw new errors.E_INSECURE_APP_KEY()
+      throw new errors.E_INSECURE_ENCRYPTER_KEY()
     }
   }
 

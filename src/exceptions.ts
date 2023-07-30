@@ -9,12 +9,12 @@
 
 import { createError } from '@poppinss/utils'
 
-export const E_INSECURE_APP_KEY = createError(
+export const E_INSECURE_ENCRYPTER_KEY = createError(
   'The value of your key should be at least 16 characters long',
-  'E_INSECURE_APP_KEY'
+  'E_INSECURE_ENCRYPTER_KEY'
 )
 
-export const E_MISSING_APP_KEY = createError(
+export const E_MISSING_ENCRYPTER_KEY = createError(
   'Missing key. The key is required to encrypt values',
-  'E_MISSING_APP_KEY'
+  'E_MISSING_ENCRYPTER_KEY'
 )
