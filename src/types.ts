@@ -56,6 +56,10 @@ export interface AES256CBCConfig extends BaseConfig {
   id: string
 }
 
+export interface AES256GCMConfig extends BaseConfig {
+  id: string
+}
+
 export type Config<KnownEncrypters extends Record<string, ManagerDriverFactory>> = {
   default?: keyof KnownEncrypters
   list: KnownEncrypters
