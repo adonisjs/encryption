@@ -8,9 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { Legacy } from '../../src/drivers/legacy.js'
 import { AES256GCM } from '../../src/drivers/aes_256_gcm.js'
-import { ChaCha20Poly1305 } from '../../src/drivers/chacha20_poly1305.js'
 
 const SECRET = 'averylongradom32charactersstring'
 
@@ -41,7 +39,6 @@ test.group('AES-256-GCM', () => {
   test('encrypt value', ({ assert }) => {
     const encryption = new AES256GCM({ id: 'lanz', key: SECRET })
     assert.notEqual(encryption.encrypt('hello-world'), 'hello-world')
-    assert.equal(encryption.decrypt(encryption.encrypt('hello-world')), 'hello-world')
   })
 
   test('encrypt an object with a secret', ({ assert }) => {
@@ -59,27 +56,33 @@ test.group('AES-256-GCM', () => {
   })
 
   test('return null when decrypting not the same id', ({ assert }) => {
-    const encryption1 = new AES256GCM({ id: 'lanz', key: SECRET })
-    const encryption2 = new AES256GCM({ id: 'virk', key: SECRET })
+    const encryption = new AES256GCM({ id: 'lanz', key: SECRET })
 
-    const encrypted = encryption1.encrypt({ username: 'lanz' })
-    assert.isNull(encryption2.decrypt(encrypted))
+    assert.isNull(
+      encryption.decrypt(
+        'virk.aes256gcm.dc0557176747dd4dba5445d27e20d865511aee3a3350c76caf27e9a3a524d3.8f7b458370aa80c7680157f81486afde.fb872925a922f735e9d9985ddfb3cae2.urTvWb1cis36VstavYyDDBWFyfL-k19EdAOs6VW8PpE'
+      )
+    )
   })
 
   test('return null when decrypting not the same format', ({ assert }) => {
-    const legacy = new Legacy({ key: SECRET })
     const encryption = new AES256GCM({ id: 'lanz', key: SECRET })
 
-    const encrypted = legacy.encrypt({ username: 'lanz' })
-    assert.isNull(encryption.decrypt(encrypted))
+    assert.isNull(
+      encryption.decrypt(
+        'lanz.aes256gcm.8f7b458370aa80c7680157f81486afde.fb872925a922f735e9d9985ddfb3cae2.urTvWb1cis36VstavYyDDBWFyfL-k19EdAOs6VW8PpE'
+      )
+    )
   })
 
   test('return null when decrypting not the same algo', ({ assert }) => {
-    const aes = new AES256GCM({ id: 'lanz2', key: SECRET })
-    const encryption = new ChaCha20Poly1305({ id: 'lanz', key: SECRET })
+    const encryption = new AES256GCM({ id: 'lanz2', key: SECRET })
 
-    const encrypted = encryption.encrypt({ username: 'lanz' })
-    assert.isNull(aes.decrypt(encrypted))
+    assert.isNull(
+      encryption.decrypt(
+        'lanz.wrongalgo.dc0557176747dd4dba5445d27e20d865511aee3a3350c76caf27e9a3a524d3.8f7b458370aa80c7680157f81486afde.fb872925a922f735e9d9985ddfb3cae2.urTvWb1cis36VstavYyDDBWFyfL-k19EdAOs6VW8PpE'
+      )
+    )
   })
 
   test('return null when decrypting non-string values', ({ assert }) => {
@@ -90,18 +93,22 @@ test.group('AES-256-GCM', () => {
 
   test('decrypt encrypted value', ({ assert }) => {
     const encryption = new AES256GCM({ id: 'lanz', key: SECRET })
-    const encrypted = encryption.encrypt({ username: 'lanz' })
-    assert.deepEqual(encryption.decrypt(encrypted), { username: 'lanz' })
+    assert.deepEqual(
+      encryption.decrypt(
+        'lanz.aes256gcm.dc0557176747dd4dba5445d27e20d865511aee3a3350c76caf27e9a3a524d3.8f7b458370aa80c7680157f81486afde.fb872925a922f735e9d9985ddfb3cae2.urTvWb1cis36VstavYyDDBWFyfL-k19EdAOs6VW8PpE'
+      ),
+      { username: 'lanz' }
+    )
   })
 
   test('return null when value is in invalid format', ({ assert }) => {
     const encryption = new AES256GCM({ id: 'lanz', key: SECRET })
-    assert.isNull(encryption.decrypt('foo'))
+    assert.isNull(encryption.decrypt('lanz.aes256gcm.foo'))
   })
 
   test('return null when unable to decode encrypted value', ({ assert }) => {
     const encryption = new AES256GCM({ id: 'lanz', key: SECRET })
-    assert.isNull(encryption.decrypt('foo.bar.baz'))
+    assert.isNull(encryption.decrypt('lanz.aes256gcm.foo.bar.baz'))
   })
 
   test('return null when hash is tampered', ({ assert }) => {

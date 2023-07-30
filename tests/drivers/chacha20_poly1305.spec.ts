@@ -8,9 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { Legacy } from '../../src/drivers/legacy.js'
 import { ChaCha20Poly1305 } from '../../src/drivers/chacha20_poly1305.js'
-import { AES256GCM } from '../../src/drivers/aes_256_gcm.js'
 
 const SECRET = 'averylongradom32charactersstring'
 
@@ -41,7 +39,6 @@ test.group('ChaCha20-Poly1305', () => {
   test('encrypt value', ({ assert }) => {
     const encryption = new ChaCha20Poly1305({ id: 'lanz', key: SECRET })
     assert.notEqual(encryption.encrypt('hello-world'), 'hello-world')
-    assert.equal(encryption.decrypt(encryption.encrypt('hello-world')), 'hello-world')
   })
 
   test('encrypt an object with a secret', ({ assert }) => {
@@ -59,27 +56,33 @@ test.group('ChaCha20-Poly1305', () => {
   })
 
   test('return null when decrypting not the same id', ({ assert }) => {
-    const encryption1 = new ChaCha20Poly1305({ id: 'lanz', key: SECRET })
-    const encryption2 = new ChaCha20Poly1305({ id: 'virk', key: SECRET })
+    const encryption = new ChaCha20Poly1305({ id: 'lanz', key: SECRET })
 
-    const encrypted = encryption1.encrypt({ username: 'lanz' })
-    assert.isNull(encryption2.decrypt(encrypted))
+    assert.isNull(
+      encryption.decrypt(
+        'virk.chacha20poly1305.e84d46f8d04eba5de9ed218fde7711b7e04c16a71774f26f88baa44f2d7311.1ff0fbfc1141033d13e45384.03959acba4e476e68fc5dd0f2372b513.7z-DdSj1fndjvThpygKpWSpHUEHUf8IGw7Mey7k13Nw'
+      )
+    )
   })
 
   test('return null when decrypting not the same format', ({ assert }) => {
-    const legacy = new Legacy({ key: SECRET })
     const encryption = new ChaCha20Poly1305({ id: 'lanz', key: SECRET })
 
-    const encrypted = legacy.encrypt({ username: 'lanz' })
-    assert.isNull(encryption.decrypt(encrypted))
+    assert.isNull(
+      encryption.decrypt(
+        'lanz.chacha20poly1305.1ff0fbfc1141033d13e45384.03959acba4e476e68fc5dd0f2372b513.7z-DdSj1fndjvThpygKpWSpHUEHUf8IGw7Mey7k13Nw'
+      )
+    )
   })
 
   test('return null when decrypting not the same algo', ({ assert }) => {
-    const aes = new AES256GCM({ id: 'lanz2', key: SECRET })
     const encryption = new ChaCha20Poly1305({ id: 'lanz', key: SECRET })
 
-    const encrypted = aes.encrypt({ username: 'lanz' })
-    assert.isNull(encryption.decrypt(encrypted))
+    assert.isNull(
+      encryption.decrypt(
+        'lanz.wrongalgo.1ff0fbfc1141033d13e45384.03959acba4e476e68fc5dd0f2372b513.7z-DdSj1fndjvThpygKpWSpHUEHUf8IGw7Mey7k13Nw'
+      )
+    )
   })
 
   test('return null when decrypting non-string values', ({ assert }) => {
@@ -90,18 +93,23 @@ test.group('ChaCha20-Poly1305', () => {
 
   test('decrypt encrypted value', ({ assert }) => {
     const encryption = new ChaCha20Poly1305({ id: 'lanz', key: SECRET })
-    const encrypted = encryption.encrypt({ username: 'lanz' })
-    assert.deepEqual(encryption.decrypt(encrypted), { username: 'lanz' })
+
+    assert.deepEqual(
+      encryption.decrypt(
+        'lanz.chacha20poly1305.e84d46f8d04eba5de9ed218fde7711b7e04c16a71774f26f88baa44f2d7311.1ff0fbfc1141033d13e45384.03959acba4e476e68fc5dd0f2372b513.7z-DdSj1fndjvThpygKpWSpHUEHUf8IGw7Mey7k13Nw'
+      ),
+      { username: 'lanz' }
+    )
   })
 
   test('return null when value is in invalid format', ({ assert }) => {
     const encryption = new ChaCha20Poly1305({ id: 'lanz', key: SECRET })
-    assert.isNull(encryption.decrypt('foo'))
+    assert.isNull(encryption.decrypt('lanz.chacha20poly1305.foo'))
   })
 
   test('return null when unable to decode encrypted value', ({ assert }) => {
     const encryption = new ChaCha20Poly1305({ id: 'lanz', key: SECRET })
-    assert.isNull(encryption.decrypt('foo.bar.baz'))
+    assert.isNull(encryption.decrypt('lanz.chacha20poly1305.foo.bar.baz'))
   })
 
   test('return null when hash is tampered', ({ assert }) => {

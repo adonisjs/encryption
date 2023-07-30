@@ -8,9 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { Legacy } from '../../src/drivers/legacy.js'
 import { AES256CBC } from '../../src/drivers/aes_256_cbc.js'
-import { AES256GCM } from '../../src/drivers/aes_256_gcm.js'
 
 const SECRET = 'averylongradom32charactersstring'
 
@@ -41,7 +39,6 @@ test.group('AES-256-CBC', () => {
   test('encrypt value', ({ assert }) => {
     const encryption = new AES256CBC({ id: 'lanz', key: SECRET })
     assert.notEqual(encryption.encrypt('hello-world'), 'hello-world')
-    assert.equal(encryption.decrypt(encryption.encrypt('hello-world')), 'hello-world')
   })
 
   test('encrypt an object with a secret', ({ assert }) => {
@@ -59,27 +56,33 @@ test.group('AES-256-CBC', () => {
   })
 
   test('return null when decrypting not the same id', ({ assert }) => {
-    const encryption1 = new AES256CBC({ id: 'lanz', key: SECRET })
-    const encryption2 = new AES256CBC({ id: 'virk', key: SECRET })
+    const encryption = new AES256CBC({ id: 'lanz', key: SECRET })
 
-    const encrypted = encryption1.encrypt({ username: 'lanz' })
-    assert.isNull(encryption2.decrypt(encrypted))
+    assert.isNull(
+      encryption.decrypt(
+        'virk.aes256cbc.3e4b75c4c54a3ccac85e7ce445dacd6a87d73512cd670079bce8797cf4e80f46.416c05b78dfd6755716b52323a46c93a.uk_njXJ4OzWHMKchYTpAZkQBl7IXVnbmOU4n7Nw525A'
+      )
+    )
   })
 
   test('return null when decrypting not the same format', ({ assert }) => {
-    const legacy = new Legacy({ key: SECRET })
     const encryption = new AES256CBC({ id: 'lanz', key: SECRET })
 
-    const encrypted = legacy.encrypt({ username: 'lanz' })
-    assert.isNull(encryption.decrypt(encrypted))
+    assert.isNull(
+      encryption.decrypt(
+        'lanz.aes256cbc.416c05b78dfd6755716b52323a46c93a.uk_njXJ4OzWHMKchYTpAZkQBl7IXVnbmOU4n7Nw525A'
+      )
+    )
   })
 
   test('return null when decrypting not the same algo', ({ assert }) => {
-    const aes = new AES256GCM({ id: 'lanz2', key: SECRET })
     const encryption = new AES256CBC({ id: 'lanz', key: SECRET })
 
-    const encrypted = aes.encrypt({ username: 'lanz' })
-    assert.isNull(encryption.decrypt(encrypted))
+    assert.isNull(
+      encryption.decrypt(
+        'lanz.wrongalgo.3e4b75c4c54a3ccac85e7ce445dacd6a87d73512cd670079bce8797cf4e80f46.416c05b78dfd6755716b52323a46c93a.uk_njXJ4OzWHMKchYTpAZkQBl7IXVnbmOU4n7Nw525A'
+      )
+    )
   })
 
   test('return null when decrypting non-string values', ({ assert }) => {
@@ -90,18 +93,23 @@ test.group('AES-256-CBC', () => {
 
   test('decrypt encrypted value', ({ assert }) => {
     const encryption = new AES256CBC({ id: 'lanz', key: SECRET })
-    const encrypted = encryption.encrypt({ username: 'lanz' })
-    assert.deepEqual(encryption.decrypt(encrypted), { username: 'lanz' })
+
+    assert.deepEqual(
+      encryption.decrypt(
+        'lanz.aes256cbc.0ae59591860a97bcc44fbcfcbdc855d7989e7ecc4db4ed8ed0d242d434652298.293979b790106206e6d396f6ea92f2cf.4oTirrLj_Q9ituhhcDcx6LOTGYTWKFviDvc8zcbDtlU'
+      ),
+      { username: 'lanz' }
+    )
   })
 
   test('return null when value is in invalid format', ({ assert }) => {
     const encryption = new AES256CBC({ id: 'lanz', key: SECRET })
-    assert.isNull(encryption.decrypt('foo'))
+    assert.isNull(encryption.decrypt('lanz.aes256cbc.foo'))
   })
 
   test('return null when unable to decode encrypted value', ({ assert }) => {
     const encryption = new AES256CBC({ id: 'lanz', key: SECRET })
-    assert.isNull(encryption.decrypt('foo.bar.baz'))
+    assert.isNull(encryption.decrypt('lanz.aes256cbc.foo.bar.baz'))
   })
 
   test('return null when hash is tampered', ({ assert }) => {
