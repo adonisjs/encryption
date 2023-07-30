@@ -46,7 +46,7 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
     /**
      * Using a random string as the iv for generating unpredictable values
      */
-    const iv = string.random(16)
+    const iv = Buffer.from(string.random(16))
 
     /**
      * Creating chiper
@@ -72,9 +72,7 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
      * to generate the HMAC, so that HMAC checks for integrity of both the `encrypted value`
      * and the `iv`.
      */
-    const result = `${this.base64.urlEncode(encrypted)}${this.separator}${this.base64.urlEncode(
-      iv
-    )}`
+    const result = `${encrypted.toString('hex')}${this.separator}${iv.toString('hex')}`
 
     const nounce = cipher.getAuthTag().toString('hex')
 
@@ -119,7 +117,7 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
     /**
      * Make sure we are able to urlDecode the encrypted value
      */
-    const encrypted = this.base64.urlDecode(encryptedEncoded, 'base64')
+    const encrypted = Buffer.from(encryptedEncoded, 'hex')
     if (!encrypted) {
       return null
     }
@@ -127,7 +125,7 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
     /**
      * Make sure we are able to urlDecode the iv
      */
-    const iv = this.base64.urlDecode(ivEncoded)
+    const iv = Buffer.from(ivEncoded, 'hex')
     if (!iv) {
       return null
     }
@@ -172,7 +170,7 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
        */
       decipher.setAuthTag(nounce)
 
-      const decrypted = decipher.update(encrypted, 'base64', 'utf8') + decipher.final('utf8')
+      const decrypted = decipher.update(encrypted) + decipher.final('utf8')
       return new MessageBuilder().verify(decrypted)
     } catch {
       return null
