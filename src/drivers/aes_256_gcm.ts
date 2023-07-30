@@ -53,10 +53,14 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
      */
     const cipher = createCipheriv('aes-256-gcm', this.cryptoKey, iv)
 
+    if (purpose) {
+      cipher.setAAD(Buffer.from(purpose), { plaintextLength: Buffer.byteLength(purpose) })
+    }
+
     /**
      * Encoding value to a string so that we can set it on the cipher
      */
-    const encodedValue = new MessageBuilder().build(payload, expiresIn, purpose)
+    const encodedValue = new MessageBuilder().build(payload, expiresIn)
 
     /**
      * Set final to the cipher instance and encrypt it
@@ -156,9 +160,21 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
      */
     try {
       const decipher = createDecipheriv('aes-256-gcm', this.cryptoKey, iv)
+
+      /**
+       * Set the purpose for the decipher
+       */
+      if (purpose) {
+        decipher.setAAD(Buffer.from(purpose), { plaintextLength: Buffer.byteLength(purpose) })
+      }
+
+      /**
+       * Set the nounce
+       */
       decipher.setAuthTag(nounce)
+
       const decrypted = decipher.update(encrypted, 'base64', 'utf8') + decipher.final('utf8')
-      return new MessageBuilder().verify(decrypted, purpose)
+      return new MessageBuilder().verify(decrypted)
     } catch {
       return null
     }
