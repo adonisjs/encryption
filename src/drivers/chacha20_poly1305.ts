@@ -7,8 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { createCipheriv, createDecipheriv } from 'node:crypto'
-import string from '@poppinss/utils/string'
+import { createCipheriv, createDecipheriv, randomBytes } from 'node:crypto'
 import { MessageBuilder } from '@poppinss/utils'
 import * as errors from '../exceptions.js'
 import { BaseDriver } from './base_driver.js'
@@ -46,7 +45,7 @@ export class ChaCha20Poly1305 extends BaseDriver implements EncryptionDriverCont
     /**
      * Using a random string as the iv for generating unpredictable values
      */
-    const iv = Buffer.from(string.random(12))
+    const iv = randomBytes(12)
 
     /**
      * Creating cipher
