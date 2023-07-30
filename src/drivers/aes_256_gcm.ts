@@ -79,11 +79,10 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
     const nounce = cipher.getAuthTag().toString('hex')
 
     /**
-     * Returns the result + hmac
+     * Returns the id + algo + result + nounce + hmac
      */
-    return `${this.#config.id}${this.separator}aes256gcm${this.separator}${result}${
-      this.separator
-    }${nounce}${this.separator}${new Hmac(this.cryptoKey).generate(result)}`
+    const hmac = new Hmac(this.cryptoKey).generate(result)
+    return this.computeReturns([this.#config.id, 'aes256gcm', result, nounce, hmac])
   }
 
   /**

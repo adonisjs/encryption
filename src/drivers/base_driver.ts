@@ -56,6 +56,10 @@ export abstract class BaseDriver {
     }
   }
 
+  computeReturns(values: string[]) {
+    return values.join(this.separator)
+  }
+
   /**
    * Returns the message verifier instance
    */

@@ -77,12 +77,10 @@ export class ChaCha20Poly1305 extends BaseDriver implements EncryptionDriverCont
     const nounce = cipher.getAuthTag().toString('hex')
 
     /**
-     * Returns the result + hmac
+     * Returns the id + algo + result + nounce + hmac
      */
     const hmac = new Hmac(this.cryptoKey).generate(result)
-    return `${this.#config.id}${this.separator}chacha20poly1305${this.separator}${result}${
-      this.separator
-    }${nounce}${this.separator}${hmac}`
+    return this.computeReturns([this.#config.id, 'chacha20poly1305', result, nounce, hmac])
   }
 
   /**

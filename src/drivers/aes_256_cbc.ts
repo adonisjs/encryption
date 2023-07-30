@@ -73,11 +73,10 @@ export class AES256CBC extends BaseDriver implements EncryptionDriverContract {
     )}`
 
     /**
-     * Returns the result + hmac
+     * Returns the id + algo + result + hmac
      */
-    return `${this.#config.id}${this.separator}aes256cbc${this.separator}${result}${
-      this.separator
-    }${new Hmac(this.cryptoKey).generate(result)}`
+    const hmac = new Hmac(this.cryptoKey).generate(result)
+    return this.computeReturns([this.#config.id, 'aes256cbc', result, hmac])
   }
 
   /**

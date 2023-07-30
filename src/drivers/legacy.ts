@@ -66,7 +66,8 @@ export class Legacy extends BaseDriver implements EncryptionDriverContract {
     /**
      * Returns the result + hmac
      */
-    return `${result}${this.separator}${new Hmac(this.cryptoKey).generate(result)}`
+    const hmac = new Hmac(this.cryptoKey).generate(result)
+    return this.computeReturns([result, hmac])
   }
 
   /**
