@@ -9,12 +9,17 @@
 
 import { createCipheriv, createDecipheriv } from 'node:crypto'
 import string from '@poppinss/utils/string'
-import { MessageBuilder } from '@poppinss/utils'
+import { base64, MessageBuilder } from '@poppinss/utils'
 import { BaseDriver } from './base_driver.js'
 import { Hmac } from '../hmac.js'
 import type { EncryptionDriverContract, LegacyConfig } from '../types.js'
 
 export class Legacy extends BaseDriver implements EncryptionDriverContract {
+  /**
+   * Reference to base64 object for base64 encoding/decoding values
+   */
+  base64: typeof base64 = base64
+
   constructor(config: LegacyConfig) {
     super(config)
   }

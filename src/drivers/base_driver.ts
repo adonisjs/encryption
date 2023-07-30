@@ -8,7 +8,6 @@
  */
 
 import { createHash } from 'node:crypto'
-import { base64 } from '@poppinss/utils'
 import * as errors from '../exceptions.js'
 import { MessageVerifier } from '../message_verifier.js'
 import type { BaseConfig } from '../types.js'
@@ -31,11 +30,6 @@ export abstract class BaseDriver {
    * and verifying values.
    */
   verifier: MessageVerifier
-
-  /**
-   * Reference to base64 object for base64 encoding/decoding values
-   */
-  base64: typeof base64 = base64
 
   protected constructor(config: BaseConfig) {
     this.#validateSecret(config.key)
