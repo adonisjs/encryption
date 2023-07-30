@@ -46,7 +46,7 @@ export class ChaCha20Poly1305 extends BaseDriver implements EncryptionDriverCont
     /**
      * Using a random string as the iv for generating unpredictable values
      */
-    const iv = string.random(12)
+    const iv = Buffer.from(string.random(12))
 
     /**
      * Creating cipher
@@ -72,18 +72,17 @@ export class ChaCha20Poly1305 extends BaseDriver implements EncryptionDriverCont
      * to generate the HMAC, so that HMAC checks for integrity of both the `encrypted value`
      * and the `iv`.
      */
-    const result = `${this.base64.urlEncode(encrypted)}${this.separator}${this.base64.urlEncode(
-      iv
-    )}`
+    const result = `${encrypted.toString('hex')}${this.separator}${iv.toString('hex')}`
 
     const nounce = cipher.getAuthTag().toString('hex')
 
     /**
      * Returns the result + hmac
      */
+    const hmac = new Hmac(this.cryptoKey).generate(result)
     return `${this.#config.id}${this.separator}chacha20poly1305${this.separator}${result}${
       this.separator
-    }${nounce}${this.separator}${new Hmac(this.cryptoKey).generate(result)}`
+    }${nounce}${this.separator}${hmac}`
   }
 
   /**
@@ -120,7 +119,7 @@ export class ChaCha20Poly1305 extends BaseDriver implements EncryptionDriverCont
     /**
      * Make sure we are able to urlDecode the encrypted value
      */
-    const encrypted = this.base64.urlDecode(encryptedEncoded, 'base64')
+    const encrypted = Buffer.from(encryptedEncoded, 'hex')
     if (!encrypted) {
       return null
     }
@@ -128,7 +127,7 @@ export class ChaCha20Poly1305 extends BaseDriver implements EncryptionDriverCont
     /**
      * Make sure we are able to urlDecode the iv
      */
-    const iv = this.base64.urlDecode(ivEncoded)
+    const iv = Buffer.from(ivEncoded, 'hex')
     if (!iv) {
       return null
     }
@@ -174,7 +173,7 @@ export class ChaCha20Poly1305 extends BaseDriver implements EncryptionDriverCont
        */
       decipher.setAuthTag(nounce)
 
-      const decrypted = decipher.update(encrypted, 'base64', 'utf8') + decipher.final('utf8')
+      const decrypted = decipher.update(encrypted) + decipher.final('utf8')
       return new MessageBuilder().verify(decrypted)
     } catch {
       return null
