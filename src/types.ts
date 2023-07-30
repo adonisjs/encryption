@@ -55,8 +55,10 @@ export interface LegacyConfig extends BaseConfig {}
 export interface AES256CBCConfig extends BaseConfig {
   id: string
 }
-
 export interface AES256GCMConfig extends BaseConfig {
+  id: string
+}
+export interface ChaCha20Poly1305Config extends BaseConfig {
   id: string
 }
 
