@@ -10,6 +10,7 @@
 import { test } from '@japa/runner'
 import { Legacy } from '../../src/drivers/legacy.js'
 import { AES256CBC } from '../../src/drivers/aes_256_cbc.js'
+import { AES256GCM } from '../../src/drivers/aes_256_gcm.js'
 
 const SECRET = 'averylongradom32charactersstring'
 
@@ -65,11 +66,19 @@ test.group('AES-256-CBC', () => {
     assert.isNull(encryption2.decrypt(encrypted))
   })
 
-  test('return null when decrypting not the same algo', ({ assert }) => {
+  test('return null when decrypting not the same format', ({ assert }) => {
     const legacy = new Legacy({ key: SECRET })
     const encryption = new AES256CBC({ id: 'lanz', key: SECRET })
 
     const encrypted = legacy.encrypt({ username: 'lanz' })
+    assert.isNull(encryption.decrypt(encrypted))
+  })
+
+  test('return null when decrypting not the same algo', ({ assert }) => {
+    const aes = new AES256GCM({ id: 'lanz2', key: SECRET })
+    const encryption = new AES256CBC({ id: 'lanz', key: SECRET })
+
+    const encrypted = aes.encrypt({ username: 'lanz' })
     assert.isNull(encryption.decrypt(encrypted))
   })
 

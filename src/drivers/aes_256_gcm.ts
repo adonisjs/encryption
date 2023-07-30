@@ -115,7 +115,7 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
     }
 
     /**
-     * Make sure we are able to urlDecode the encrypted value
+     * Make sure we are able to decode the encrypted value
      */
     const encrypted = Buffer.from(encryptedEncoded, 'hex')
     if (!encrypted) {
@@ -123,7 +123,7 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
     }
 
     /**
-     * Make sure we are able to urlDecode the iv
+     * Make sure we are able to decode the iv
      */
     const iv = Buffer.from(ivEncoded, 'hex')
     if (!iv) {
@@ -131,7 +131,7 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
     }
 
     /**
-     * Make sure we are able to urlDecode the nounce
+     * Make sure we are able to decode the nounce
      */
     const nounce = Buffer.from(nounceEncoded, 'hex')
     if (!nounce) {

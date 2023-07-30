@@ -11,6 +11,7 @@ import { test } from '@japa/runner'
 import { Encryption } from '../src/encryption.js'
 import { EncryptionManager } from '../src/encryption_manager.js'
 import { Legacy } from '../src/drivers/legacy.js'
+import { MessageVerifier } from '../src/message_verifier.js'
 
 const SECRET = 'averylongradom32charactersstring'
 
@@ -70,6 +71,17 @@ test.group('Encryption manager', () => {
       () => manager.use(),
       'Cannot create encryption instance. No default encryption is defined in the config'
     )
+  })
+
+  test('use message verifier', ({ assert }) => {
+    const manager = new EncryptionManager({
+      default: 'legacy',
+      list: {
+        legacy: () => new Legacy({ key: SECRET }),
+      },
+    })
+
+    assert.instanceOf(manager.getMessageVerifier(), MessageVerifier)
   })
 
   test('encrypt text using the default driver', ({ assert }) => {
