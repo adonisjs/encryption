@@ -60,7 +60,7 @@ test.group('ChaCha20-Poly1305', () => {
 
     assert.isNull(
       encryption.decrypt(
-        'virk.chacha20poly1305.e84d46f8d04eba5de9ed218fde7711b7e04c16a71774f26f88baa44f2d7311.1ff0fbfc1141033d13e45384.03959acba4e476e68fc5dd0f2372b513.7z-DdSj1fndjvThpygKpWSpHUEHUf8IGw7Mey7k13Nw'
+        'virk.e84d46f8d04eba5de9ed218fde7711b7e04c16a71774f26f88baa44f2d7311.1ff0fbfc1141033d13e45384.03959acba4e476e68fc5dd0f2372b513.7z-DdSj1fndjvThpygKpWSpHUEHUf8IGw7Mey7k13Nw'
       )
     )
   })
@@ -70,17 +70,7 @@ test.group('ChaCha20-Poly1305', () => {
 
     assert.isNull(
       encryption.decrypt(
-        'lanz.chacha20poly1305.1ff0fbfc1141033d13e45384.03959acba4e476e68fc5dd0f2372b513.7z-DdSj1fndjvThpygKpWSpHUEHUf8IGw7Mey7k13Nw'
-      )
-    )
-  })
-
-  test('return null when decrypting not the same algo', ({ assert }) => {
-    const encryption = new ChaCha20Poly1305({ id: 'lanz', key: SECRET })
-
-    assert.isNull(
-      encryption.decrypt(
-        'lanz.wrongalgo.1ff0fbfc1141033d13e45384.03959acba4e476e68fc5dd0f2372b513.7z-DdSj1fndjvThpygKpWSpHUEHUf8IGw7Mey7k13Nw'
+        'lanz.1ff0fbfc1141033d13e45384.03959acba4e476e68fc5dd0f2372b513.7z-DdSj1fndjvThpygKpWSpHUEHUf8IGw7Mey7k13Nw'
       )
     )
   })
@@ -96,7 +86,7 @@ test.group('ChaCha20-Poly1305', () => {
 
     assert.deepEqual(
       encryption.decrypt(
-        'lanz.chacha20poly1305.e84d46f8d04eba5de9ed218fde7711b7e04c16a71774f26f88baa44f2d7311.1ff0fbfc1141033d13e45384.03959acba4e476e68fc5dd0f2372b513.7z-DdSj1fndjvThpygKpWSpHUEHUf8IGw7Mey7k13Nw'
+        'lanz.e84d46f8d04eba5de9ed218fde7711b7e04c16a71774f26f88baa44f2d7311.1ff0fbfc1141033d13e45384.03959acba4e476e68fc5dd0f2372b513.7z-DdSj1fndjvThpygKpWSpHUEHUf8IGw7Mey7k13Nw'
       ),
       { username: 'lanz' }
     )

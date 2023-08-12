@@ -60,7 +60,7 @@ test.group('AES-256-GCM', () => {
 
     assert.isNull(
       encryption.decrypt(
-        'virk.aes256gcm.dc0557176747dd4dba5445d27e20d865511aee3a3350c76caf27e9a3a524d3.8f7b458370aa80c7680157f81486afde.fb872925a922f735e9d9985ddfb3cae2.urTvWb1cis36VstavYyDDBWFyfL-k19EdAOs6VW8PpE'
+        'virk.dc0557176747dd4dba5445d27e20d865511aee3a3350c76caf27e9a3a524d3.8f7b458370aa80c7680157f81486afde.fb872925a922f735e9d9985ddfb3cae2.urTvWb1cis36VstavYyDDBWFyfL-k19EdAOs6VW8PpE'
       )
     )
   })
@@ -70,17 +70,7 @@ test.group('AES-256-GCM', () => {
 
     assert.isNull(
       encryption.decrypt(
-        'lanz.aes256gcm.8f7b458370aa80c7680157f81486afde.fb872925a922f735e9d9985ddfb3cae2.urTvWb1cis36VstavYyDDBWFyfL-k19EdAOs6VW8PpE'
-      )
-    )
-  })
-
-  test('return null when decrypting not the same algo', ({ assert }) => {
-    const encryption = new AES256GCM({ id: 'lanz2', key: SECRET })
-
-    assert.isNull(
-      encryption.decrypt(
-        'lanz.wrongalgo.dc0557176747dd4dba5445d27e20d865511aee3a3350c76caf27e9a3a524d3.8f7b458370aa80c7680157f81486afde.fb872925a922f735e9d9985ddfb3cae2.urTvWb1cis36VstavYyDDBWFyfL-k19EdAOs6VW8PpE'
+        'lanz.8f7b458370aa80c7680157f81486afde.fb872925a922f735e9d9985ddfb3cae2.urTvWb1cis36VstavYyDDBWFyfL-k19EdAOs6VW8PpE'
       )
     )
   })
@@ -95,7 +85,7 @@ test.group('AES-256-GCM', () => {
     const encryption = new AES256GCM({ id: 'lanz', key: SECRET })
     assert.deepEqual(
       encryption.decrypt(
-        'lanz.aes256gcm.dc0557176747dd4dba5445d27e20d865511aee3a3350c76caf27e9a3a524d3.8f7b458370aa80c7680157f81486afde.fb872925a922f735e9d9985ddfb3cae2.urTvWb1cis36VstavYyDDBWFyfL-k19EdAOs6VW8PpE'
+        'lanz.dc0557176747dd4dba5445d27e20d865511aee3a3350c76caf27e9a3a524d3.8f7b458370aa80c7680157f81486afde.fb872925a922f735e9d9985ddfb3cae2.urTvWb1cis36VstavYyDDBWFyfL-k19EdAOs6VW8PpE'
       ),
       { username: 'lanz' }
     )

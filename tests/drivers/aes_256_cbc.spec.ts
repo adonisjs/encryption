@@ -60,7 +60,7 @@ test.group('AES-256-CBC', () => {
 
     assert.isNull(
       encryption.decrypt(
-        'virk.aes256cbc.3e4b75c4c54a3ccac85e7ce445dacd6a87d73512cd670079bce8797cf4e80f46.416c05b78dfd6755716b52323a46c93a.uk_njXJ4OzWHMKchYTpAZkQBl7IXVnbmOU4n7Nw525A'
+        'virk.3e4b75c4c54a3ccac85e7ce445dacd6a87d73512cd670079bce8797cf4e80f46.416c05b78dfd6755716b52323a46c93a.uk_njXJ4OzWHMKchYTpAZkQBl7IXVnbmOU4n7Nw525A'
       )
     )
   })
@@ -70,17 +70,7 @@ test.group('AES-256-CBC', () => {
 
     assert.isNull(
       encryption.decrypt(
-        'lanz.aes256cbc.416c05b78dfd6755716b52323a46c93a.uk_njXJ4OzWHMKchYTpAZkQBl7IXVnbmOU4n7Nw525A'
-      )
-    )
-  })
-
-  test('return null when decrypting not the same algo', ({ assert }) => {
-    const encryption = new AES256CBC({ id: 'lanz', key: SECRET })
-
-    assert.isNull(
-      encryption.decrypt(
-        'lanz.wrongalgo.3e4b75c4c54a3ccac85e7ce445dacd6a87d73512cd670079bce8797cf4e80f46.416c05b78dfd6755716b52323a46c93a.uk_njXJ4OzWHMKchYTpAZkQBl7IXVnbmOU4n7Nw525A'
+        'lanz.416c05b78dfd6755716b52323a46c93a.uk_njXJ4OzWHMKchYTpAZkQBl7IXVnbmOU4n7Nw525A'
       )
     )
   })
@@ -96,7 +86,7 @@ test.group('AES-256-CBC', () => {
 
     assert.deepEqual(
       encryption.decrypt(
-        'lanz.aes256cbc.0ae59591860a97bcc44fbcfcbdc855d7989e7ecc4db4ed8ed0d242d434652298.293979b790106206e6d396f6ea92f2cf.4oTirrLj_Q9ituhhcDcx6LOTGYTWKFviDvc8zcbDtlU'
+        'lanz.0ae59591860a97bcc44fbcfcbdc855d7989e7ecc4db4ed8ed0d242d434652298.293979b790106206e6d396f6ea92f2cf.4oTirrLj_Q9ituhhcDcx6LOTGYTWKFviDvc8zcbDtlU'
       ),
       { username: 'lanz' }
     )

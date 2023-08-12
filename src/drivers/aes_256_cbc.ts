@@ -70,10 +70,10 @@ export class AES256CBC extends BaseDriver implements EncryptionDriverContract {
     const result = `${encrypted.toString('hex')}${this.separator}${iv.toString('hex')}`
 
     /**
-     * Returns the id + algo + result + hmac
+     * Returns the id + result + hmac
      */
     const hmac = new Hmac(this.cryptoKey).generate(result)
-    return this.computeReturns([this.#config.id, 'aes256cbc', result, hmac])
+    return this.computeReturns([this.#config.id, result, hmac])
   }
 
   /**
@@ -86,17 +86,10 @@ export class AES256CBC extends BaseDriver implements EncryptionDriverContract {
 
     /**
      * Make sure the encrypted value is in correct format. ie
-     * [id].[algo].[encrypted value].[iv].[hash]
+     * [id].[encrypted value].[iv].[hash]
      */
-    const [id, algo, encryptedEncoded, ivEncoded, hash] = value.split(this.separator)
-    if (!id || !algo || !encryptedEncoded || !ivEncoded || !hash) {
-      return null
-    }
-
-    /**
-     * Make sure the algo is correct
-     */
-    if (algo !== 'aes256cbc') {
+    const [id, encryptedEncoded, ivEncoded, hash] = value.split(this.separator)
+    if (!id || !encryptedEncoded || !ivEncoded || !hash) {
       return null
     }
 

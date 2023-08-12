@@ -76,10 +76,10 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
     const nounce = cipher.getAuthTag().toString('hex')
 
     /**
-     * Returns the id + algo + result + nounce + hmac
+     * Returns the id + result + nounce + hmac
      */
     const hmac = new Hmac(this.cryptoKey).generate(result)
-    return this.computeReturns([this.#config.id, 'aes256gcm', result, nounce, hmac])
+    return this.computeReturns([this.#config.id, result, nounce, hmac])
   }
 
   /**
@@ -92,17 +92,10 @@ export class AES256GCM extends BaseDriver implements EncryptionDriverContract {
 
     /**
      * Make sure the encrypted value is in correct format. ie
-     * [id].[algo].[encrypted value].[iv].[nounce].[hash]
+     * [id].[encrypted value].[iv].[nounce].[hash]
      */
-    const [id, algo, encryptedEncoded, ivEncoded, nounceEncoded, hash] = value.split(this.separator)
-    if (!id || !algo || !encryptedEncoded || !ivEncoded || !nounceEncoded || !hash) {
-      return null
-    }
-
-    /**
-     * Make sure the algo is correct
-     */
-    if (algo !== 'aes256gcm') {
+    const [id, encryptedEncoded, ivEncoded, nounceEncoded, hash] = value.split(this.separator)
+    if (!id || !encryptedEncoded || !ivEncoded || !nounceEncoded || !hash) {
       return null
     }
 
