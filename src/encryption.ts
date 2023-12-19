@@ -55,10 +55,15 @@ export class Encryption {
   }
 
   constructor(options: EncryptionOptions) {
+    const secretValue =
+      options.secret && typeof options.secret === 'object' && 'release' in options.secret
+        ? options.secret.release()
+        : options.secret
+
     this.#options = { algorithm: 'aes-256-cbc', ...options }
-    this.#validateSecret(options.secret)
-    this.#cryptoKey = createHash('sha256').update(options.secret).digest()
-    this.verifier = new MessageVerifier(options.secret)
+    this.#validateSecret(secretValue)
+    this.#cryptoKey = createHash('sha256').update(secretValue).digest()
+    this.verifier = new MessageVerifier(secretValue)
   }
 
   /**
@@ -127,7 +132,7 @@ export class Encryption {
   /**
    * Decrypt value and verify it against a purpose
    */
-  decrypt<T extends any>(value: string, purpose?: string): T | null {
+  decrypt<T extends any>(value: unknown, purpose?: string): T | null {
     if (typeof value !== 'string') {
       return null
     }

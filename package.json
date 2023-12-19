@@ -19,7 +19,7 @@
   },
   "scripts": {
     "pretest": "npm run lint",
-    "test": "c8 npm run vscode:test",
+    "test": "c8 npm run quick:test",
     "clean": "del-cli build",
     "typecheck": "tsc --noEmit",
     "precompile": "npm run lint && npm run clean",
@@ -31,7 +31,7 @@
     "prepublishOnly": "npm run build",
     "lint": "eslint . --ext=.ts",
     "sync-labels": "github-label-sync --labels .github/labels.json adonisjs/encryption",
-    "vscode:test": "node --loader=ts-node/esm bin/test.ts"
+    "quick:test": "node --loader=ts-node/esm --enable-source-maps bin/test.ts"
   },
   "keywords": [
     "encryption"
