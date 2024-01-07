@@ -1,11 +1,11 @@
 /*
  * @adonisjs/encryption
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) AdonisJS
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-/// <reference path="./encryption.ts" />
-/// <reference path="./container.ts" />
+export * as errors from './src/errors.js'
+export { Encryption } from './src/encryption.js'
