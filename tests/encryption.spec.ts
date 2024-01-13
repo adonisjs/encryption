@@ -30,12 +30,12 @@ test.group('Encryption | encrypt', () => {
   test('fail when secret is not bigger than 16chars', ({ assert }) => {
     assert.throws(
       () => new Encryption({ secret: 'helloworld' }),
-      'The value of "app.appKey" should be atleast 16 charcaters long'
+      'The value of "app.appKey" should be atleast 16 characters long'
     )
 
     assert.throws(
       () => new Encryption({ secret: new Secret('helloworld') }),
-      'The value of "app.appKey" should be atleast 16 charcaters long'
+      'The value of "app.appKey" should be atleast 16 characters long'
     )
   })
 

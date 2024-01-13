@@ -10,7 +10,7 @@
 import { createError } from '@poppinss/utils'
 
 export const E_INSECURE_APP_KEY = createError(
-  'The value of "app.appKey" should be atleast 16 charcaters long',
+  'The value of "app.appKey" should be atleast 16 characters long',
   'E_INSECURE_APP_KEY'
 )
 
