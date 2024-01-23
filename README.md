@@ -8,7 +8,7 @@
 AdonisJS encryption packages is used to encrypt, sign and base64 encode values. The encryption is performed using `aes-256-cbc` algorithm. A unique `iv` is generated for each encryption call and therefore two encrypted output for the same value are different.
 
 ## Official Documentation
-The documentation is available on the [AdonisJS website](https://docs.adonisjs.com/guides/security/encryption)
+The documentation is available on the [AdonisJS website](https://docs.adonisjs.com/guides/encryption)
 
 ## Contributing
 One of the primary goals of AdonisJS is to have a vibrant community of users and contributors who believes in the principles of the framework.
