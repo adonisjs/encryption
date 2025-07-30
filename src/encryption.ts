@@ -8,7 +8,8 @@
  */
 
 import string from '@poppinss/utils/string'
-import { base64, MessageBuilder } from '@poppinss/utils'
+import base64 from '@poppinss/utils/base64'
+import { MessageBuilder } from '@poppinss/utils'
 import { createHash, createCipheriv, createDecipheriv } from 'node:crypto'
 
 import { Hmac } from './hmac.js'

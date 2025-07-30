@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { createError } from '@poppinss/utils'
+import { createError } from '@poppinss/utils/exception'
 
 export const E_INSECURE_APP_KEY = createError(
   'The value of "app.appKey" should be atleast 16 characters long',

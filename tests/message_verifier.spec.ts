@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { base64 } from '@poppinss/utils'
+import base64 from '@poppinss/utils/base64'
 import { MessageVerifier } from '../src/message_verifier.js'
 
 const SECRET = 'averylongradom32charactersstring'

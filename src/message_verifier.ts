@@ -8,7 +8,10 @@
  */
 
 import { createHash } from 'node:crypto'
-import { base64, MessageBuilder, RuntimeException } from '@poppinss/utils'
+import base64 from '@poppinss/utils/base64'
+import { MessageBuilder } from '@poppinss/utils'
+import { RuntimeException } from '@poppinss/utils/exception'
+
 import { Hmac } from './hmac.js'
 
 /**
