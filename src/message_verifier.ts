@@ -34,6 +34,11 @@ export class MessageVerifier {
    */
   #separator = '.'
 
+  /**
+   * Creates a new MessageVerifier instance with the provided secret
+   *
+   * @param secret - The secret key used for signing operations
+   */
   constructor(secret: string) {
     this.#cryptoKey = createHash('sha256').update(secret).digest()
   }
@@ -51,8 +56,13 @@ export class MessageVerifier {
    *
    * You can optionally define a purpose for which the value was signed and
    * mentioning a different purpose/no purpose during unsign will fail.
+   *
+   * @param payload - The data to be signed
+   * @param expiresIn - Optional expiration time
+   * @param purpose - Optional purpose for which the value is signed
+   * @returns The signed payload as a string
    */
-  sign(payload: any, expiresIn?: string | number, purpose?: string) {
+  sign(payload: any, expiresIn?: string | number, purpose?: string): string {
     if (payload === null || payload === undefined) {
       throw new RuntimeException(`Cannot sign "${payload}" value`)
     }
@@ -63,6 +73,10 @@ export class MessageVerifier {
 
   /**
    * Unsign a previously signed value with an optional purpose
+   *
+   * @param payload - The signed payload string to verify
+   * @param purpose - Optional purpose that the value was signed for
+   * @returns The original data if valid, null if invalid or verification fails
    */
   unsign<T extends any>(payload: string, purpose?: string): T | null {
     if (typeof payload !== 'string') {

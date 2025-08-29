@@ -23,6 +23,9 @@ import { MessageVerifier } from './message_verifier.ts'
  * security (read more https://en.wikipedia.org/wiki/Semantic_security).
  */
 export class Encryption {
+  /**
+   * Configuration options for the encryption instance
+   */
   #options: Required<EncryptionOptions>
 
   /**
@@ -50,11 +53,18 @@ export class Encryption {
 
   /**
    * The algorithm in use
+   *
+   * @returns The encryption algorithm being used
    */
   get algorithm(): 'aes-256-cbc' {
     return this.#options.algorithm
   }
 
+  /**
+   * Creates a new Encryption instance with the provided options
+   *
+   * @param options - Configuration options for encryption
+   */
   constructor(options: EncryptionOptions) {
     const secretValue =
       options.secret && typeof options.secret === 'object' && 'release' in options.secret
@@ -69,8 +79,10 @@ export class Encryption {
 
   /**
    * Validates the app secret
+   *
+   * @param secret - The secret to validate
    */
-  #validateSecret(secret?: string) {
+  #validateSecret(secret?: string): void {
     if (typeof secret !== 'string') {
       throw new errors.E_MISSING_APP_KEY()
     }
@@ -93,8 +105,13 @@ export class Encryption {
    *
    * You can optionally define a purpose for which the value was encrypted and
    * mentioning a different purpose/no purpose during decrypt will fail.
+   *
+   * @param payload - The data to be encrypted
+   * @param expiresIn - Optional expiration time
+   * @param purpose - Optional purpose for which the value is encrypted
+   * @returns The encrypted payload as a string
    */
-  encrypt(payload: any, expiresIn?: string | number, purpose?: string) {
+  encrypt(payload: any, expiresIn?: string | number, purpose?: string): string {
     /**
      * Using a random string as the iv for generating unpredictable values
      */
@@ -132,6 +149,10 @@ export class Encryption {
 
   /**
    * Decrypt value and verify it against a purpose
+   *
+   * @param value - The encrypted value to decrypt
+   * @param purpose - Optional purpose that the value was encrypted for
+   * @returns The decrypted data if valid, null if decryption fails
    */
   decrypt<T extends any>(value: unknown, purpose?: string): T | null {
     if (typeof value !== 'string') {
@@ -191,8 +212,11 @@ export class Encryption {
 
   /**
    * Create a children instance with different secret key
+   *
+   * @param options - Optional configuration options to override
+   * @returns A new Encryption instance with the merged options
    */
-  child(options?: EncryptionOptions) {
+  child(options?: EncryptionOptions): Encryption {
     return new Encryption({ ...this.#options, ...options })
   }
 }

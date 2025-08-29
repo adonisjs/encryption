@@ -9,11 +9,20 @@
 
 import { createError } from '@poppinss/utils/exception'
 
+/**
+ * Error thrown when the application key is too short to be secure.
+ * The application key must be at least 16 characters long to ensure
+ * adequate security for encryption operations.
+ */
 export const E_INSECURE_APP_KEY = createError(
   'The value of "app.appKey" should be atleast 16 characters long',
   'E_INSECURE_APP_KEY'
 )
 
+/**
+ * Error thrown when the application key is missing from the configuration.
+ * The application key is required for all encryption and decryption operations.
+ */
 export const E_MISSING_APP_KEY = createError(
   'Missing "app.appKey". The key is required to encrypt values',
   'E_MISSING_APP_KEY'
