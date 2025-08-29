@@ -12,7 +12,7 @@ import base64 from '@poppinss/utils/base64'
 import { MessageBuilder } from '@poppinss/utils'
 import { RuntimeException } from '@poppinss/utils/exception'
 
-import { Hmac } from './hmac.js'
+import { Hmac } from './hmac.ts'
 
 /**
  * Message verifier is similar to the encryption. However, the actual payload

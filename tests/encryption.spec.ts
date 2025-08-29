@@ -9,7 +9,7 @@
 
 import { test } from '@japa/runner'
 import { Secret } from '@poppinss/utils'
-import { Encryption } from '../src/encryption.js'
+import { Encryption } from '../src/encryption.ts'
 
 const SECRET = 'averylongradom32charactersstring'
 

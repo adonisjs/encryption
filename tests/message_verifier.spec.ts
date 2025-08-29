@@ -9,7 +9,7 @@
 
 import { test } from '@japa/runner'
 import base64 from '@poppinss/utils/base64'
-import { MessageVerifier } from '../src/message_verifier.js'
+import { MessageVerifier } from '../src/message_verifier.ts'
 
 const SECRET = 'averylongradom32charactersstring'
 

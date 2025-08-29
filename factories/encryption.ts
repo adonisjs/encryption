@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import { Encryption } from '../src/encryption.js'
-import type { EncryptionOptions } from '../src/types.js'
+import { Encryption } from '../src/encryption.ts'
+import type { EncryptionOptions } from '../src/types.ts'
 
 /**
  * Encryption factory is used to generate encryption class instances for

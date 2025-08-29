@@ -12,10 +12,10 @@ import base64 from '@poppinss/utils/base64'
 import { MessageBuilder } from '@poppinss/utils'
 import { createHash, createCipheriv, createDecipheriv } from 'node:crypto'
 
-import { Hmac } from './hmac.js'
-import * as errors from './errors.js'
-import type { EncryptionOptions } from './types.js'
-import { MessageVerifier } from './message_verifier.js'
+import { Hmac } from './hmac.ts'
+import * as errors from './errors.ts'
+import type { EncryptionOptions } from './types.ts'
+import { MessageVerifier } from './message_verifier.ts'
 
 /**
  * The encryption class allows encrypting and decrypting values using `aes-256-cbc` or `aes-128-cbc`
